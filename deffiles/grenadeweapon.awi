@@ -1,0 +1,1229 @@
+#include "gadget.h"
+
+void GenerateUI( asset Asset )
+{
+	// No UI entries
+
+	Asset.AddEntry_Int( "isCameraSensor", 0, 0, 1 ).Show( false );
+	Asset.AddEntry_Combo( "configstringFileType", "WEAPONFILE" ).Show( false );
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	
+	// Misc 
+
+	Asset.BeginCategory( "Misc" );
+	{
+		Asset.AddEntry_String( "displayName", "" ).SetTitle( "Display Name" ).SetToolTip( "Localization alias for weapon name displayed on HUD in game." );
+		Asset.AddEntry_String( "modeName", "" ).SetTitle( "Mode Name" ).SetToolTip( "Localization alias for selective fire mode text displayed on HUD in game." );
+		Asset.AddEntry_String( "parentWeaponName", "" ).SetTitle( "Stat Name" ).SetToolTip( "Name of parent weapon for weapon stats e.g. parent weapons for dogs_bite_mp is dogs_mp." );
+		Asset.AddEntry_Combo( "playerAnimType", "default | none | other | hold | briefcase | reviver | radio | remotecontrol | hatchet | tablet | groundslam | onehanded | turned " ).SetTitle( "Player Anim Type" ).SetToolTip( "Select an Player Anim Type - specifies 'playerAnimType' in playeranim.script" );
+		Asset.AddEntry_String( "altWeapon", "" ).SetTitle( "Alt Weapon Name" ).SetToolTip( "Weapon to switch to when this weapon's selective fire mode is switched in the game." );
+		Asset.AddEntry_String( "AIOverlayDescription", "" ).SetTitle( "AI Description" ).SetToolTip( "Localization alias for text shown when crosshair is placed over a friendly. Eg. Rifleman, Submachine Gunner, etc." );
+		Asset.AddEntry_String( "spawnInfluencer", "" ).SetTitle( "Spawn Influencer" ).SetToolTip( "Spawn influencer created with the grenade" );
+		Asset.AddEntry_Combo( "inventoryType", "primary | offhand | item | altmode | gadget | hero" ).SetTitle( "Inventory" ).SetToolTip( "Select what sort of inventory this weapon is." );
+		Asset.AddEntry_Combo( "weaponType", "grenade" ).SetTitle( "Type" ).SetToolTip( "Select a weapon type." );
+		Asset.AddEntry_Combo( "weaponClass", "grenade | Killstreak Alt Stored Weapon | ball" ).SetTitle( "Class" ).SetToolTip( "Select an appropriate class for this weapon." );
+		Asset.AddEntry_Combo( "impactType", "grenade_explode | none | blade" ).Show( false );
+		Asset.AddEntry_Combo( "offhandSlot", "None | Lethal grenade | Tactical grenade | Equipment | Specific use | Gadget | Special" ).SetTitle( "Offhand Slot" );
+		Asset.AddEntry_Combo( "offhandClass", "None | Smoke Grenade | Frag Grenade | Flash Grenade | Gear | Supply Drop Marker | Gadget" ).SetTitle( "Offhand Class" );
+		Asset.AddEntry_AssetCombo( "cacWeaponXCam", "xcam" ).SetTitle( "CAC Weapon XCam" ).SetToolTip( "The XCam that specifies the camera and weapon rotation for the CAC when viewing the full weapon." );
+		Asset.AddEntry_CheckBox( "noDropsOrRaises", false ).SetTitle( "No Drops or Raises" ).SetToolTip( "Ignores the drops and raises for this weapon (MP Only)" );
+		Asset.AddEntry_CheckBox( "noThirdPersonDropsOrRaises", false ).SetTitle( "No Weapon Switches" ).SetToolTip( "No 3rd person Drop or Raise anims." );
+		Asset.AddEntry_CheckBox( "explodeOnGround", false ).SetTitle( "Explode On Ground" ).SetToolTip( "The grenade will wait until it hits the ground to explode." );
+		Asset.AddEntry_CheckBox( "noPing", false ).SetTitle( "No Ping" ).SetToolTip( "The grenade is ignored by AI." );
+		Asset.AddEntry_CheckBox( "throwBack", false ).SetTitle( "Throw Back" ).SetToolTip( "Grenade can be picked up and thrown back." );
+		Asset.AddEntry_String( "throwBackType", "" ).SetTitle( "Throw Back Type" ).SetToolTip( "Type to be used when thrown back." );
+		Asset.AddEntry_CheckBox( "throwLeftHanded", false ).SetTitle( "Throw Left Handed" ).SetToolTip( "Used by the trail fx system to start from the correct hand." );
+		Asset.AddEntry_CheckBox( "magicMissileTrail", false ).SetTitle( "Magic Missile Trail FX" ).SetToolTip( "Trail reconstruction should not use the players location, but just use the spawn location of the entity." );
+		Asset.AddEntry_CheckBox( "hideThirdPerson", false ).SetTitle( "Hide 3rd Person" ).SetToolTip( "Grenade will not be drawn 3rd person (inventory items only)" );
+		Asset.AddEntry_CheckBox( "useAntiLagRewind", false ).SetTitle( "use Anti-Lag Rewind" ).SetToolTip( "force using anti-lag rewind." );
+		Asset.AddEntry_String( "explosionTag", "" ).SetTitle( "Explosion Tag" ).SetToolTip( "Name of the tag you want the explosion to come from. Origin is used as default." );
+		Asset.AddEntry_CheckBox( "canUseUnderWater", true ).SetTitle( "Can Use Under Water" ).SetToolTip( "The weapon can be used under water." );
+		Asset.AddEntry_CheckBox( "waterMovement", false ).SetTitle( "Water Movement" ).SetToolTip( "The weapon will use the water physics movement in water." );
+		Asset.AddEntry_CheckBox( "dropGrenadeOnDeath", false ).SetTitle( "Drop Grenade On Death" ).SetToolTip( "The weapon drop on death, if the player was priming it." );
+		Asset.AddEntry_CheckBox( "blocksProne", false ).SetTitle( "Cannot Go Prone" ).SetToolTip( "The player cannot go prone when they have this weapon equiped." );
+		Asset.AddEntry_CheckBox( "isRollingGrenade", true ).SetTitle( "Rolls on the ground" );
+		Asset.AddEntry_CheckBox( "hideBallisticPrediction", false ).SetTitle( "Hides the ballistic prediction hud items" );
+		Asset.AddEntry_CheckBox( "sentientImpactExplode", false ).SetTitle( "Explodes on impact with a sentient" );
+		Asset.AddEntry_CheckBox( "explodeWhenStationary", false ).SetTitle( "Explodes when the grenade stops moving, regardless of cook time remaining" );
+		Asset.AddEntry_CheckBox( "isLaserSensor", false ).SetTitle( "Sensor Lasers" ).SetToolTip( "The grenade will laser paint all enemies in the blast radius." );
+		Asset.AddEntry_CheckBox( "isHoldUseGrenade", false ).SetTitle( "Hold Use Grenade" ).SetToolTip( "The grenade spawns no projectile and is used in hand only." );
+		Asset.AddEntry_CheckBox( "isValuable", false ).SetTitle( "Valuable item (ZM only)" );
+		Asset.AddEntry_CheckBox( "isTacticalInsertion", false ).SetTitle( "Tactical Insertion" );
+		Asset.AddEntry_CheckBox( "bUseRigidBodyOnVehicle", false ).SetTitle( "Rigid Body on Vehicles" ).SetToolTip( "Use rigid body physics on moving platforms" );
+		Asset.AddEntry_CheckBox( "iCanDoQuickToss", false ).SetTitle( "Allow Quick Grenade Toss" ).SetToolTip( "Allow quick drop when using equipment alt mode." );
+		Asset.AddEntry_CheckBox( "bDisallowAtMatchStart", false ).SetTitle( "Round Start Delayed" ).SetToolTip( "Dont allow this weapon to be used at round start." );
+		Asset.AddEntry_CheckBox( "bSetUsedStat", false ).SetTitle( "Set Used Stat" ).SetToolTip( "Will increment the weapon's used stat when spawned" );
+		Asset.AddEntry_CheckBox( "isEmp", false ).SetTitle( "Is Emp" ).SetToolTip( "This is an EMP weapon." );
+		Asset.AddEntry_CheckBox( "isFlash", false ).SetTitle( "Is Flash" ).SetToolTip( "This is a flash weapon." );
+		Asset.AddEntry_CheckBox( "isStun", false ).SetTitle( "Is Stun" ).SetToolTip( "This is a stun weapon." );
+		Asset.AddEntry_CheckBox( "doEmpDestroyFx", true ).SetTitle( "Do Emp Destroy Fx" ).SetToolTip( "This weapon will do the EMP destroy fx when it gets detonated by an EMP." );
+		Asset.AddEntry_CheckBox( "doStun", false ).SetTitle( "Do Stun" ).SetToolTip( "This weapon causes stun on other objects" );
+		Asset.AddEntry_CheckBox( "doDamageFeedback", false ).SetTitle( "Do Damage Feedback" ).SetToolTip( "This weapon causes damage feedback on other objects" );
+		Asset.AddEntry_CheckBox( "doHackedStats", false ).SetTitle( "Do Hacked Stats" ).SetToolTip( "When hacked, this weapon updates various hacked stats for the player" );
+		Asset.AddEntry_CheckBox( "disableCamoOnFire", false ).SetTitle( "Disable camo on fire" ).SetToolTip( "On fire/use optic camo will be turned off if currently active" );
+		Asset.AddEntry_String( "hackerTriggerOriginTag", "" ).SetTitle( "Hacker Trigger Origin Tag" ).SetToolTip( "Name of the tag you want the hacker trigger origing to be at. Most of the time leave this blank to use the object's base origin instead." );
+		Asset.AddEntry_CheckBox( "anyPlayerCanRetrieve", false ).SetTitle( "Any Player Can Retrieve" ).SetToolTip( "Any player can retrieve instances of this weapon, not just the owner." );
+		Asset.AddEntry_CheckBox( "destroyableByTrophySystem", true ).SetTitle( "Destroyable By Trophy System" ).SetToolTip( "This weapon can be destroyed by the Trophy System" );
+		Asset.AddEntry_CheckBox( "drawOffhandModelInHand", true ).SetTitle( "Draw Offhand Model In Hand" ).SetToolTip( "This weapon will draw while still in the player's hand, typically for hold anim type equipment" );
+		Asset.AddEntry_CheckBox( "nonStowedWeapon", false ).SetTitle( "Non Stowed Weapon" ).SetToolTip( "This weapon will not be drawn when it is stowed (basic knife for example)" );
+		Asset.AddEntry_CheckBox( "isScavengable", true ).SetTitle( "Is Scavengable" ).SetToolTip( "This weapon can receive additional ammo through the Scavenger system" );
+		Asset.AddEntry_CheckBox( "doesFireDamage", false ).SetTitle( "Does Fire Damage" ).SetToolTip( "This weapon is considered to cause fire damage for some methods of death" );
+		Asset.AddEntry_CheckBox( "ignoresFlakJacket", false ).SetTitle( "Ignores Flak Jacket" ).SetToolTip( "This weapon ignores damage reduction from flak jacket" );
+		Asset.AddEntry_CheckBox( "notKillstreak", false ).SetTitle( "Not Killstreak" ).SetToolTip( "This weapon is explicitly not a killstreak weapon, generally used for weapons marked as Specific Use which need to not be treated as a killstreak weapon" );
+		Asset.AddEntry_CheckBox( "isGameplayWeapon", false ).SetTitle( "Is Gameplay Weapon" ).SetToolTip( "This weapon is a special purpose gameplay weapon, for example the syrette or the briefcase_bomb" );
+		Asset.AddEntry_CheckBox( "isSupplyDropWeapon", false ).SetTitle( "Is Supply Drop Weapon" ).SetToolTip( "This weapon is a supply drop weapon" );
+		Asset.AddEntry_CheckBox( "skipBattlechatterKill", false ).SetTitle( "Skip Battlechatter Kill" ).SetToolTip( "This weapon will not 'kill' battlechatter to play" );
+		Asset.AddEntry_CheckBox( "skipBattlechatterReload", false ).SetTitle( "Skip Battlechatter Reload" ).SetToolTip( "This weapon will not 'reload' battlechatter to play" );
+		Asset.AddEntry_CheckBox( "skipLowAmmoVox", false ).SetTitle( "Skip Low Ammo Vox" ).SetToolTip( "This weapon should skip playing low ammo warning voiceovers" );
+		Asset.AddEntry_CheckBox( "ignoreTeamKills", false ).SetTitle( "Ignore Team Kills" ).SetToolTip( "This weapon will not cause team kills" );
+		Asset.AddEntry_CheckBox( "isPerkBottle", false ).SetTitle( "Is Perk Bottle" ).SetToolTip( "This weapon is a perk bottle" );
+		Asset.AddEntry_CheckBox( "isFlourishWeapon", false ).SetTitle( "Is Flourish Weapon" ).SetToolTip( "This weapon is a flourish weapon, e.g. the bowie flourish that is given, plays an anim and is then removed when buying the bowie knife" );
+		Asset.AddEntry_CheckBox( "isHybridWeapon", false ).SetTitle( "Is HybridWeapon" ).SetToolTip( "This weapon is one half of a hybrid pairing" );
+		Asset.AddEntry_CheckBox( "isHackToolWeapon", false ).SetTitle( "Is Hack Tool Weapon" ).SetToolTip( "This weapon is hacker tool, and can be used to hack enemy equipment and killstreaks" );
+		Asset.AddEntry_CheckBox( "bShownEnemyEquip", false ).SetTitle( "Shown Enemy Equipment" ).SetToolTip( "This weapon is visible to enemies with specialty_showenemyequipment" );
+		Asset.AddEntry_CheckBox( "bShownEnemyExplo", false ).SetTitle( "Shown Enemy Explosive" ).SetToolTip( "This weapon is visible to enemies with specialty_detectexplosive" );
+		Asset.AddEntry_CheckBox( "bShownRetrievable", false ).SetTitle( "Shown As Retrievable" ).SetToolTip( "This weapon is visible to the owner when retrievable" );
+		Asset.AddEntry_CheckBox( "activatesSlam", false ).SetTitle( "Activates Slam" ).SetToolTip( "Firing weapon will trigger the slam movement." );
+		Asset.AddEntry_CheckBox( "allowWhileTraversing", false ).SetTitle( "Allow While Traversing" ).SetToolTip( "Allows offhand weapons to activate while player is traversing." );
+		Asset.AddEntry_CheckBox( "grenadeUseRigidBodyPhysics", false ).SetTitle( "Use Rigid Body Physics" ).SetToolTip( "Put the grenade into physics then thrown." );
+		Asset.AddEntry_Float( "slamJumpHeight", 60.0, 0.0, 10000 ).SetTitle( "Slam jump height" ).SetToolTip( "Player's slam jump height." );
+		Asset.AddEntry_Float( "slamJumpForwardSpeed", 400.0, 0.0, 10000 ).SetTitle( "Slam jump forward speed" ).SetToolTip( "Player's slam jump forward speed." );
+		Asset.AddEntry_Int( "slamViewAngle", 20, 0, 75 ).SetTitle( "Player's slam view angle" ).SetToolTip( "Player's slam view angle." );
+		Asset.AddEntry_CheckBox( "dontTakeClipOnlyWeaponIfEmpty", false ).SetTitle( "Don't Take Clip Only Weapon If Empty" ).SetToolTip( "Provides a method of disabling taking of clip only weapons when they are empty." );
+		Asset.AddEntry_Int( "powerLevel", 0, 0, 10000 ).SetTitle( "Power Level" ).SetToolTip( "Power level of the weapon, currently only used to differentiate the 3 levels of the ZOD sword." );
+		Asset.AddEntry_CheckBox( "noholddelayallowed", false ).SetTitle( "Can't hold to delay attack." ).SetToolTip( "Prevents holding the 'fire' button from initiating the attack." );
+		Asset.AddEntry_CheckBox( "visiblityControlledByNotetrack", false ).SetTitle( "Visibility Controlled By Notetrack" ).SetToolTip( "Note tra" );
+	}
+	
+	// Damage
+	
+	Asset.BeginCategory( "Damage" );
+	{
+		Asset.AddEntry_Int( "damage", 0, 0, 10000 ).SetTitle( "Impact Damage" ).SetToolTip( "Damage when missile directly hits target." );
+		Asset.AddEntry_CheckBox( "destroysEquipment", false ).SetTitle( "Destroys Equipment" ).SetToolTip( "No matter the damage or explosion damage will destroy equipment." );
+		Asset.AddEntry_CheckBox( "doNotDamageOwner", false ).SetTitle( "Do Not Damage Owner" ).SetToolTip( "This weapon will not damage the owner" );
+		Asset.AddEntry_Float( "damageToOwnerScalar", 1, 0, 2 ).SetStep( 0.05 ).SetTitle( "Damage To Owner Scalar" ).SetToolTip( "Scales the damage to the owner of the missile" );
+		Asset.AddEntry_CheckBox( "bImpactDamageOnlyActorsAndPlayers", false ).SetTitle( "Impact Damage Only Players/Actors" ).SetToolTip( "This will not impact damage anything but players or AI.  Everything else it will splash damage only." );
+
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Explosion
+	
+	Asset.BeginCategory( "Explosion" );
+	{
+		Asset.AddEntry_Int( "explosionRadiusMin", 0, 0, 10000 ).SetStep( 10 ).SetTitle( "Explosion Inner Radius" ).SetToolTip( "Inner damage radius.  Currently only works for flashbangs" );
+		Asset.AddEntry_Int( "explosionRadius", 300, 0, 10000 ).SetStep( 10 ).SetTitle( "Explosion Outer Radius" ).SetToolTip( "Outer damage radius (1 world unit = 1 inch)" );
+		Asset.AddEntry_Int( "explosionInnerDamage", 10, 0, 10000 ).SetTitle( "Explosion Inner Damage" ).SetToolTip( "Damage at center of explosion" );
+		Asset.AddEntry_Int( "explosionOuterDamage", 10, 0, 10000 ).SetTitle( "Explosion Outer Damage" ).SetToolTip( "Damage at outside edge of explosion" );
+		Asset.AddEntry_Int( "explosionOuterHeight", 0, 0, 10000 ).SetTitle( "Explosion Outer Height" ).SetToolTip( "Damage at outside edge of explosion" );
+		Asset.AddEntry_Float( "damageConeAngle", 180, 0, 180 ).SetTitle( "Explosion Damage Cone Angle" ).SetToolTip( "The explosion only affects entities within a cone centered around the grenade's forward direction.  This is the angle between the forward direction an the side of the cone (180 is a spherical explosion)." );	
+		Asset.AddEntry_CheckBox( "allowKnockback", false ).SetTitle( "Explosion Allow Knockback" ).SetToolTip( "Explosion will push player based on damage." );
+		Asset.AddEntry_Float( "explosionNormalOffset", 0, 0, 10000 ).SetTitle( "Explosion Normal Offset" ).SetToolTip( "The explosion damage is moved out from the point of impact along the normal.  This allows you to push the explosion damage check away from the surface to prevent getting blocked by small items." );	
+		Asset.AddEntry_Float( "vehicleProjectileDamageScalar", 1, 0, 1000 ).SetTitle( "Vehicle Explosion Damage Scalar" ).SetToolTip( "Scales the damage this weapon does to vehicles." );
+		Asset.AddEntry_Float( "vehicleProjectileSplashDamageScalar", 1, 0, 1000 ).SetTitle( "Vehicle Explosion Splash Damage Scalar" ).SetToolTip( "Scales the splash damage this weapon does to vehicles." );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Explosion - No Collision
+	
+	Asset.BeginCategory( "Explosion - Unblocked by Collision" );
+	{
+		Asset.AddEntry_Int( "explosionNoCollisionInnerRadius", 0, 0, 10000 ).SetStep( 10 ).SetTitle( "Inner Radius" ).SetToolTip( "Inner damage radius.  Currently only works for flashbangs." );
+		Asset.AddEntry_Int( "explosionNoCollisionOuterRadius", 0, 0, 10000 ).SetStep( 10 ).SetTitle( "Outer Radius" ).SetToolTip( "Outer damage radius (1 world unit = 1 inch)" );
+		Asset.AddEntry_Int( "explosionNoCollisionOuterHeight", 0, 0, 10000 ).SetStep( 10 ).SetTitle( "Outer Height" ).SetToolTip( "Outer damage height (1 world unit = 1 inch)" );
+		Asset.AddEntry_Int( "explosionNoCollisionInnerDamage", 0, 0, 10000 ).SetTitle( "Inner Damage" ).SetToolTip( "Damage at center of explosion" );
+		Asset.AddEntry_Int( "explosionNoCollisionOuterDamage", 0, 0, 10000 ).SetTitle( "Outer Damage" ).SetToolTip( "Damage at outside edge of explosion" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	
+	// Explosion
+	
+	Asset.BeginCategory( "Explosion Camera Shake" );
+	{
+		Asset.AddEntry_Float( "explosionCameraShakeScale", 0.5, 0, 1 ).SetStep( 0.01 ).SetTitle( "Shake Scale" ).SetToolTip( "Shake happens on each fire event" );
+		Asset.AddEntry_Int( "explosionCameraShakeDuration", 500, 0, 10000 ).SetTitle(  "Shake Duration" ).SetToolTip( "Shake happens on each fire event" );
+		Asset.AddEntry_Int( "explosionCameraShakeRadius", 512, 0, 10000 ).SetTitle(  "Shake Radius" ).SetToolTip( "Shake happens on each fire event" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	
+	// Projectile	
+	
+	Asset.BeginCategory( "Projectile" );
+	{
+		Asset.AddEntry_Int( "projectileSpeed", 600, 0, 10000 ).SetTitle( "Projectile Speed" ).SetToolTip( "The speed the projectile travels (inches/sec)" );
+		Asset.AddEntry_Int( "projectileSpeedRelativeUp", 0, -10000, 10000 ).SetTitle( "Player's View Upwards" ).SetToolTip( "The amount of verticle velocity the projectile is given in the direction that the player is looking" );
+		Asset.AddEntry_Int( "projectileSpeedUp", 0, -10000, 10000 ).SetTitle( "Extra Verticle Speed" ).SetToolTip( "Vertical speed added to grenades" );
+		Asset.AddEntry_Int( "projectileSpeedForward", 0, -10000, 10000 ).SetStep( 10 ).SetTitle( "Forward" ).SetToolTip( "The amount of horizontal velocity the projectile is given in the direction the player is looking" );	
+		Asset.AddEntry_Int( "projectileActivateDist", 0, 0, 10000 ).SetTitle( "Activate Distance" ).SetToolTip( "Distance the projectile must travel before it will explode." );
+		Asset.AddEntry_AssetCombo( "projectileModel", "xmodel" ).SetTitle( "Projectile Model" ).SetToolTip( "Define the model to be used for the projectile" );
+		Asset.AddEntry_Combo( "projExplosionType", "grenade | rocket | flashbang | smoke | heavy explosive | fire | napalmblob | napalmbloblight | shrapnel span | none" ).SetTitle( "Explosion Type" ).SetToolTip( "Defines the type of effect that will be played. Effects are defined in fx/iw_impacts.csv" );
+
+		Asset.AddEntry_CheckBox( "projImpactExplode", false ).SetTitle( "Impact Explode" ).SetToolTip( "Projectile explodes on impact" );
+		int impactExplodeEnabled = Asset.GetEntryValue( "projImpactExplode" ).ToInt();
+		Asset.AddEntry_CheckBox( "projImpactExplodeNoSentients", false ).SetTitle( "Disable Impact Explode on Sentients" ).SetToolTip( "Disable impact explode if you hit a sentient" ).Show( impactExplodeEnabled == 1 );
+		
+		Asset.AddEntry_Path( "projExplosionEffect", "" ).SetRelativePath( "share/raw" ).SetTitle( "Explosion FX" ).SetToolTip( "Defines the effect that will be played when the projectile explodes. It will also play the effects that are defined in fx/iw_impacts.csv" );	
+		Asset.AddEntry_Path( "projExplosionEffectPlayer", "" ).SetRelativePath( "share/raw" ).SetTitle( "Explosion FX First Person" ).SetToolTip( "Special case first person effect." );	
+		Asset.AddEntry_CheckBox( "projExplosionEffectForceNormalUp", false ).SetTitle( "FX Force straight-up normal vector" );
+		Asset.AddEntry_Path( "projExplosionEffect2", "" ).SetRelativePath( "share/raw" ).SetTitle( "Explosion FX 2" ).SetToolTip( "Defines the effect that will be played when the projectile explodes. It will also play the effects that are defined in fx/iw_impacts.csv" );	
+		Asset.AddEntry_CheckBox( "projExplosionEffect2ForceNormalUp", false ).SetTitle( "FX Force straight-up normal vector 2" );
+		Asset.AddEntry_Path( "projExplosionEffect3", "" ).SetRelativePath( "share/raw" ).SetTitle( "Explosion FX 3" ).SetToolTip( "Defines the effect that will be played when the projectile explodes. It will also play the effects that are defined in fx/iw_impacts.csv" );	
+		Asset.AddEntry_CheckBox( "projExplosionEffect3ForceNormalUp", false ).SetTitle( "FX Force straight-up normal vector 3" );
+		Asset.AddEntry_Path( "projExplosionEffect4", "" ).SetRelativePath( "share/raw" ).SetTitle( "Explosion FX 4" ).SetToolTip( "Defines the effect that will be played when the projectile explodes. It will also play the effects that are defined in fx/iw_impacts.csv" );	
+		Asset.AddEntry_CheckBox( "projExplosionEffect4ForceNormalUp", false ).SetTitle( "FX Force straight-up normal vector 4" );
+		Asset.AddEntry_Path( "projExplosionEffect5", "" ).SetRelativePath( "share/raw" ).SetTitle( "Explosion FX 5" ).SetToolTip( "Defines the effect that will be played when the projectile explodes. It will also play the effects that are defined in fx/iw_impacts.csv" );	
+		Asset.AddEntry_CheckBox( "projExplosionEffect5ForceNormalUp", false ).SetTitle( "FX Force straight-up normal vector 5" );
+
+		
+		
+		Asset.AddEntry_String( "projExplosionSound", "" ).SetTitle( "Explosion Sound" ).SetToolTip( "The sound the projectile will play when it impacts" );
+		Asset.AddEntry_String( "projSmokeStartSound", "" ).SetTitle( "Smoke Grenade Start Sound" ).SetToolTip( "The sound the smoke grenade will play when it starts" );
+		Asset.AddEntry_String( "projSmokeLoopSound", "" ).SetTitle( "Smoke Grenade Loop Sound" ).SetToolTip( "The sound the smoke grenade will play when it smoking" );
+		Asset.AddEntry_String( "projSmokeEndSound", "" ).SetTitle( "Smoke Grenade End Sound" ).SetToolTip( "The sound the smoke grenade will play when it finished" );
+		Asset.AddEntry_Path( "projTrailEffect", "" ).SetRelativePath( "share/raw" ).SetTitle( "Trail FX" ).SetToolTip( "This effect is attached to and trailed behind the projectile model." );
+		Asset.AddEntry_CheckBox( "timedDetonation", true ).SetTitle( "Timed Detonation" ).SetToolTip( "If checked, the grenade will detonate after the fuse time has passed." );
+		Asset.AddEntry_Int( "proximityDetonation", 0, 0, 10000 ).SetTitle( "Proximity Detonation Distance" ).SetToolTip( "The grenade detones when a target is within this distance. Use 0 to disable proximity, > 0 distance to enable" );
+		Asset.AddEntry_Int( "proximityAlarmInnerRadius", 0, 0, 10000 ).SetTitle( "Proximity Alarm Inner Radius" ).SetToolTip( "Proximity Alarm Inner radius." );
+		Asset.AddEntry_Int( "proximityAlarmOuterRadius", 0, 0, 10000 ).SetTitle( "Proximity Alarm Outer Radius" ).SetToolTip( "Proximity Alarm Outer radius." );
+		Asset.AddEntry_Float( "proximityAlarmActivationDelay", 0, 0, 5 ).SetStep( 0.1 ).SetTitle( "Proximity Alarm Activation Delay" ).SetToolTip( "The length of time from when the grenade is thrown to when it's proximity alarm is activated." );	
+		Asset.AddEntry_Int( "chainEventRadius", 0, 0, 10000 ).SetTitle( "Chain Event Radius" ).SetToolTip( "The radius of the chain event. Use 0 to disable, > 0 to enable" );
+		Asset.AddEntry_Float( "chainEventTime", 0, 0, 15 ).SetStep( 0.1 ).SetTitle( "Chain Event Time" ).SetToolTip( "The time a chain node looks for more nodes to continue the chain." );	
+		Asset.AddEntry_Int( "chainEventMax", 0, 0, 8 ).SetTitle( "Chain Event Max" ).SetToolTip( "The max number of nodes one chain can have" );
+		Asset.AddEntry_Int( "multiDetonation", 0, 0, 10000 ).SetTitle( "Multi Detonation Instances" ).SetToolTip( "The grenade detones and spawns multiple grenades. Use 0 to disable multi, > 0 for the number of instances to spawn" );
+		Asset.AddEntry_Int( "multiDetonationFragmentSpeed", 500, 0, 10000 ).SetTitle( "Multi Detonation Fragemnt Speed" ).SetToolTip( "When the grenade detones and spawns multiple grenade fragment, this is the speed at which they are launched. Use > 0 for the the speed" );
+		Asset.AddEntry_Float( "curveballForce", 0, 0, 1000 ).SetTitle( "Curve Ball Force Scalar." ).SetToolTip( "Curve Ball force scalar towards the target. Use 0 to disable, > 0 for force scalar" );
+		Asset.AddEntry_Int( "curveballMaxRadius", 1000, 0, 10000 ).SetTitle( "Curve Ball Max Radius" ).SetToolTip( "Curve Ball effects when target is within this radius. Use > 0 for the radius" );
+		Asset.AddEntry_Float( "fuseTime", 4, 0, 100 ).SetStep( 0.1 ).SetTitle( "Fuse Time" ).SetToolTip( "The length of time from when the grenade is thrown to when it explodes." );	
+		Asset.AddEntry_Float( "aiFuseTime", 4, 0, 100 ).SetStep( 0.1 ).SetTitle( "AI Fuse Time" ).SetToolTip( "The length of time from when the grenade is thrown to when it explodes for AI." );	
+		Asset.AddEntry_CheckBox( "holdButtonToThrow", false ).SetTitle( "Must hold attack button to throw" ).SetToolTip( "If checked, the attack button must be held down during the hold fire animation in order to throw the grenade. Also, the player will be forced to crouch and won't be able to move." );
+		Asset.AddEntry_CheckBox( "offhandHoldIsCancelable", false ).SetTitle( "Hold is Cancel-Able by Weapon Switch" ).SetToolTip( "If checked, players can cancel throwing this weapon by hitting a switch-weapon button." );
+		Asset.AddEntry_CheckBox( "freezeMovementWhenFiring", false ).SetTitle( "Freeze player's movement when firing" ).SetToolTip( "Freezes the player's position, not the viewangles" );		
+	}
+
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Burn
+
+	Asset.BeginCategory( "Burn" );
+	{
+		Asset.AddEntry_Float( "burnDuration", 0, 0, 100 ).SetStep( 0.1 ).SetTitle( "Burn Duration" ).SetToolTip( "How long a player damaged by this weapon should stay on fire." );	
+		Asset.AddEntry_Float( "burnDamageInterval", 0, 0, 100 ).SetStep( 0.1 ).SetTitle( "Burn Damage Interval" ).SetToolTip( "How often the player takes damage while burning." );	
+		Asset.AddEntry_Int( "burnDamage", 0, 0, 10000 ).SetTitle( "Burn Damage" ).SetToolTip( "How much damage the player takes while being burned" );
+	}
+
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Ammo Options
+
+	Asset.BeginCategory( "Ammo Options" );
+	{
+		Asset.AddEntry_CheckBox( "doBlowback", false ).SetTitle( "Do Blowback" ).SetToolTip( "This will trigger blowback death anims" );
+		Asset.AddEntry_Combo( "damageType", "normal | annihilator | bow_partial_charge | bow_full_charge | fireflies" ).SetTitle( "Damage Type" ).SetToolTip( "Sets a damage type to be used in the playeranim_death.script logic when MOD is not melee or splash" );
+		Asset.AddEntry_CheckBox( "doAnnihilate", false ).SetTitle( "Do Annihilate" ).SetToolTip( "This weapon will gib and annihilate if checked" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Type Options
+
+	Asset.BeginCategory( "Type Options" );
+	{
+		Asset.AddEntry_CheckBox( "canUseInVehicle", false ).SetTitle( "Usable In Vehicles" ).SetToolTip( "Allow Map and killstreaks to be used in vehicle (MP Only)" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 
+	// Melee Fields
+
+	Asset.BeginCategory( "Melee Fields" );
+	{
+		Asset.AddEntry_CheckBox( "useAsMelee", false ).SetTitle( "Use As Melee" ).SetToolTip( "This weapon will be used for melee attacks, ensure melee animation fields are filled in this weapon." );
+		Asset.AddEntry_CheckBox( "meleeServerResponse", false ).SetTitle( "Server Response Charge" ).SetToolTip( "Does a server validated melee charge." );
+		Asset.AddEntry_Float( "meleeChargeRange", 0.0, 0.0, 1000.0 ).SetTitle( "Melee Charge Range" ).SetToolTip( "Range away from the target melee assist will occur. If zero defualt dvar will be used." );
+		Asset.AddEntry_Float( "meleeLungeRange", 0.0, 0.0, 1000.0 ).SetTitle( "Melee Lunge Range" ).SetToolTip( "The attacker will lunge for melee from this far away. If zero defualt dvar will be used." );
+		Asset.AddEntry_Float( "meleeChargeMinRange", 70.0, 0.0, 1000.0 ).SetTitle( "Melee Charge Min Range" ).SetToolTip( "Min range away from the target melee assist will occur. If zero defualt dvar will be used." );
+		Asset.AddEntry_Float( "meleeTime", 0.7, 0.0, 10.0 ).SetStep( 0.05 ).SetTitle( "Melee" ).SetToolTip( "Rate of fire in seconds per melee attack." );
+		Asset.AddEntry_Float( "meleeAltTime", 0.7, 0.0, 10.0 ).SetStep( 0.05 ).SetTitle( "Melee Alt" ).SetToolTip( "Rate of fire in seconds per melee alt attack." );
+		Asset.AddEntry_Float( "meleeDelay", 0.25, 0.0, 10.0 ).SetStep( 0.05 ).SetTitle( "Melee Delay" ).SetToolTip( "Delay in seconds between pressing the fire button and the melee attack actually happening." );
+		Asset.AddEntry_Float( "meleeAltAnimTime", 0, 0.0, 10.0 ).SetTitle( "Melee Alt Anim Time" ).SetToolTip( "If a second melee is performed within this time window, the alt melee anim will play, if anim is defined, 0.0 to disable." );
+		Asset.AddEntry_Float( "meleePowerTime", 0.0, 0.0, 10.0 ).SetStep( 0.05 ).SetTitle( "Melee Power" ).SetToolTip( "Rate of fire in seconds per melee power attack (right trigger)." );
+		Asset.AddEntry_Float( "meleePowerDelay", 0.0, 0.0, 10.0 ).SetStep( 0.05 ).SetTitle( "Melee Power Delay" ).SetToolTip( "Delay in seconds between pressing the fire button and the melee power attack (right trigger) actually happening." );
+		Asset.AddEntry_Float( "meleeChargeTime", 0.0, 0.0, 10.0 ).SetStep( 0.05 ).SetTitle( "Melee Charge" ).SetToolTip( "Rate of fire in seconds per melee charge attack." );
+		Asset.AddEntry_Float( "meleeChargeAltTime", 0.0, 0.0, 10.0 ).SetStep( 0.05 ).SetTitle( "Melee Charge Alt" ).SetToolTip( "Rate of fire in seconds per melee charge alt attack." );
+		Asset.AddEntry_Float( "meleeChargeDelay", 0.0, 0.0, 10.0 ).SetStep( 0.05 ).SetTitle( "Melee Charge Delay" ).SetToolTip( "Delay in seconds between pressing the fire button and the melee charge attack actually happening." );
+		Asset.AddEntry_Float( "meleeEndFatalAnimEarlyTime", 0.0, 0.0, 10.0 ).SetStep( 0.05 ).SetTitle( "Melee End Fatal Anim Early" ).SetToolTip( "Amount in seconds that you would like the fatal animation to end early if this melee weapon uses a server result." );
+		Asset.AddEntry_Int( "meleeDamage", 25, 0, 10000 ).SetTitle( "Melee Damage" ).SetToolTip( "Damage per melee hit." );
+		Asset.AddEntry_Int( "meleeFromBehindDamage", 0, 0, 20000 ).SetTitle( "Melee From Behind Damage" ).SetToolTip( "Damage when you hit another player from behind.  If less than meleeDamage, meleeDamage will be used." );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Reload Options ( unused )
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// ADS Options
+	
+	Asset.BeginCategory( "ADS Options" );
+	{
+		Asset.AddEntry_CheckBox( "aimDownSight", false ).SetTitle( "ADS" ).SetToolTip( "Must be turned on for proper viewmodel appearance of a weapon that can be Aimed Down the Sight (ADS)." );
+	}
+		
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Attachment Perks ( unused )
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Crosshair Options
+	
+	Asset.BeginCategory( "Crosshair Options" );
+	{
+		Asset.AddEntry_Float( "enemyCrosshairRange", 1600, 0, 10000 ).SetTitle( "Enemy Crosshair Range" ).SetToolTip( "The range in at which friendly names appear and friendly or enemy changes your crosshair color." );
+		Asset.AddEntry_CheckBox( "crosshairColorChange", true ).SetTitle( "Crosshair Color Change" ).SetToolTip( "Change crosshair color if pointing at friendly or enemy" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	
+	// Heatseeking specific ( unused )
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Movement, Sprint, Turning
+	
+	Asset.BeginCategory( "Movement, Sprint, Turning" );
+	{
+		Asset.AddEntry_Float( "moveSpeedScale", 1.0, 0.0, 5.0 ).SetTitle( "Move Speed Scale" ).SetToolTip( "When using this weapon, player movement speed is multiplied by this amount." );
+		Asset.AddEntry_Float( "jumpMoveSpeedScale", 1.0, 0.0, 5.0 ).SetTitle( "Jump Move Speed Scale" ).SetToolTip( "When using this weapon and jumping, player movement speed is multiplied by this amount." );
+		Asset.AddEntry_Float( "sprintDurationScale", 1, 0.0, 5.0 ).Show( false );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Flamethrower Details ( unused )
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Aim Assist ( Console Only )
+	
+	Asset.BeginCategory( "Aim Assist ( Console Only )" );
+	{
+		Asset.AddEntry_Float( "autoAimRange", 1600, 0, 8000 ).SetTitle( "Auto Aim Range" ).SetToolTip( "(Console only.) The range in world units up to which entering ADS will lock-on to enemies. (1 world unit = 1 inch)" );
+		Asset.AddEntry_Float( "aimAssistRange", 3200, 0, 8000 ).SetTitle( "Aim Assist Range" ).SetToolTip( "(Console only.) The range in world units up to which the crosshair will stick to targets. (1 world unit = 1 inch) " );
+		Asset.AddEntry_Float( "aimAssistRangeAds", 3200, 0, 8000 ).SetTitle( "Aim Assist Range ADS" ).SetToolTip( "(Console only.) The range in world units up to which the crosshair will stick to targets in ADS. (1 world unit = 1 inch)" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Heating (for infrared)
+	
+	Asset.BeginCategory( "Heating" );
+	{
+		Asset.AddEntry_CheckBox( "overheatWeapon", false ).SetTitle( "Overheating Weapon" ).SetToolTip( "This weapon can overheat" );
+	}
+
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Ammunition
+	
+	Asset.BeginCategory( "Ammunition" );
+	{
+		Asset.AddEntry_String( "ammoName", "" ).SetTitle( "Ammo Name" ).SetToolTip( "Allows different weapons to share the same ammo pool." );
+		Asset.AddEntry_String( "clipName", "" ).SetTitle( "Clip Name" ).SetToolTip( "Allows different weapons to share clips. Used for weapons that have a selective fire option, and would therefore need to use the same type of clip." );
+		Asset.AddEntry_Int( "clipSize", 10, 0, 999 ).SetTitle( "Clip Size" ).SetToolTip( "Specifies how many bullets per clip/magazine." );
+		Asset.AddEntry_CheckBox( "clipOnly", true ).SetTitle( "Clip Only" ).SetToolTip( "Used for weapons that use clips only" );
+		Asset.AddEntry_String( "sharedAmmoCapName", "" ).SetTitle( "Shared Ammo Cap Name" );
+		Asset.AddEntry_Int( "sharedAmmoCap", 0, 0, 999 ).SetTitle( "Shared Ammo Cap" );		
+		Asset.AddEntry_Int( "startAmmo", 0, 0, 999 ).SetTitle( "Start Ammo" ).SetToolTip( "How much ammo the player gets when starting with this weapon. One clip/magazine from this amount will be already in the weapon. No effect on AI.  Affected by 'Ammo Clip Count Relative' field." );
+		Asset.AddEntry_Int( "maxAmmo", 100, 0, 999 ).SetStep( 10 ).SetTitle( "Max Stock Ammo" ).SetToolTip( "Max stock ammo the player can collect for this weapon, clip isn't reflected in this number. No effect on AI.  Affected by 'Ammo Clip Count Relative' field." );		
+		Asset.AddEntry_Int( "dropAmmoMin", 0, 0, 999 ).SetTitle( "Drop Min" ).SetToolTip( "When dropped by AI/player/hand-placed in editor, contains at least this much ammo. Not limited to real-life clip/magazine size.  Affected by 'Ammo Clip Count Relative' field." );	
+		Asset.AddEntry_Int( "dropAmmoMax", 0, 0, 999 ).SetTitle( "Drop Max" ).SetToolTip( "When dropped by AI/player/hand-placed in editor, contains no more than this much ammo. Not limited to real-life clip/magazine size.  Affected by 'Ammo Clip Count Relative' field." );
+		Asset.AddEntry_Int( "maxInstancesAllowed", 0, 0, 20 ).SetTitle( "Max Instances Allowed" ).SetToolTip( "Destroy the oldest instance when there are already this many out when a new one spawns." );
+		Asset.AddEntry_Float( "lowAmmoWarningThreshold", 0.33, 0, 1 ).SetStep( 0.1 ).SetTitle( "Clip-Ammo Low Warning %" ).SetToolTip( "The game optionally displays low-ammo warnings when remaining clip ammo goes below this percentage." );
+		Asset.AddEntry_CheckBox( "retrievable", false ).SetTitle( "Retrievable" ).SetToolTip( "Grenade can be picked up and returned to the owner's inventory." );
+		Asset.AddEntry_CheckBox( "dieOnRespawn", false ).SetTitle( "Die On Respawn" ).SetToolTip( "Grenade will exist and be active until the player respawns." );
+		Asset.AddEntry_Combo( "stickiness", "Don't stick | Stick to all | Stick to all, except ai and clients | Stick to ground | Stick to ground, maintain yaw | Stick to flesh" ).SetTitle( "Stickiness" ).SetToolTip( "Stickiness of the projectile, if not explode on impact." );					
+		Asset.AddEntry_Combo( "stickorientation", "No Change | Flat | Flat Maintain Direction" ).SetTitle( "Stick Orientation" ).SetToolTip( "Orientation the projectile should stick in." );					
+		Asset.AddEntry_CheckBox( "rotate", true ).SetTitle( "Rotate when thrown" );
+		Asset.AddEntry_CheckBox( "keepRolling", false ).SetTitle( "Keep Rolling" ).SetToolTip( "Grenade will keep rolling when it is on the ground" );
+		Asset.AddEntry_Combo( "rotateType", "Rotate both axis, grenade style | Rotate one axis, blade style | Rotate like a cylinder | Rotate using animations" ).SetTitle( "Rotate Type" );
+		Asset.AddEntry_CheckBox( "hasDetonator", false ).SetTitle( "Has Detonator" ).SetToolTip( "If checked, detonator animations will play when the player presses the detonate button, and a \"detonate\" notify will occur on the player in script." );
+		Asset.AddEntry_CheckBox( "plantable", false ).SetTitle( "Plantable" ).SetToolTip( "Weapon is planted like a claymore" );
+		Asset.AddEntry_CheckBox( "cookOffHold", false ).SetTitle( "Cookable" ).SetToolTip( "If checked, holding down the grenade throw button will reduce the grenade's timer before it is released." );
+		Asset.AddEntry_Float( "cookOffHoldTime", 0, 0, 10 ).SetStep( 0.1 ).SetTitle( "Cook Time, not fuse" ).SetToolTip( "If greater than zero, it's the cook time used instead of the fuse time. It won't consume the fuse not explode in hand." );
+		Asset.AddEntry_CheckBox( "bNoCollidePlayer", false ).SetTitle( "Don't collide with contents player" ).SetToolTip( "Weapon will not collide with contents_player" );
+		Asset.AddEntry_CheckBox( "unlimitedAmmo", false ).SetTitle("Unlimited Ammo" ).SetToolTip( "This weapon does not use ammo" );
+		Asset.AddEntry_CheckBox( "bBoxTrace", false ).SetTitle( "Force use box trace" ).SetToolTip( "Force weapon to use capsule trace, if plantable it will always do a capsule trace " );
+		Asset.AddEntry_CheckBox( "bBoxTraceSymmetrical", false ).SetTitle( "Force symmetrical trace" ).SetToolTip( "Force the origin of the trace to be in the middle of the trace volume instead at the bottom" );
+		Asset.AddEntry_Int( "boxTraceSize", 0, 0, 100 ).SetTitle( "Box Trace Size" ).SetToolTip( "Size in each direction to use when doing a box trace, caused by either 'Force use box trace' and/or 'plantable'. 0 means it will use the dvar 'missilePlantableSize'" );
+		Asset.AddEntry_CheckBox( "bBoxTraceAgainstPlayersAI", false ).SetTitle( "Use Box Trace VS Players/AI" ).SetToolTip( "EXPENSIVE. Does a secondary trace to search against capsule traces on players/ai.  If the secondary trace hits you will not get body part information on the hit." );
+		Asset.AddEntry_CheckBox( "bAuxiliaryTrace", false ).SetTitle( "Use auxiliairy bullet traces" ).SetToolTip( "This weapon will generate auxiliaryTraceCount more traces with auxiliaryTraceRadius offset that it any trace hits a surface it will impact. " );
+		Asset.AddEntry_Int( "auxiliaryTraceCount", 4, 1, 6 ).SetTitle( "Auxiliary bullet trace count" ).SetToolTip( "This weapon will generate auxiliaryTraceCount more traces with auxiliaryTraceRadius offset that it any trace hits a surface it will impact. " );
+		Asset.AddEntry_Float( "auxiliaryTraceRadius", 5, 0, 32 ).SetStep( 1 ).SetTitle( "Auxiliary bullet trace offset radius" ).SetToolTip( "This weapon will generate auxiliaryTraceCount more traces with auxiliaryTraceRadius offset that it any trace hits a surface it will impact. " );
+		Asset.AddEntry_Int( "ammoCountEquipment", 0, 0, 999 ).SetTitle( "Equipment Start Ammo" ).SetToolTip( "How much ammo spawned equipment starts with." );
+		Asset.AddEntry_CheckBox( "doGibbing", false ).SetTitle( "Do Gibbing" ).SetToolTip( "This gun will gib enemy if checked" );
+		Asset.AddEntry_CheckBox( "doGibbingOnMelee", false ).SetTitle( "Do Gibbing On Melee" ).SetToolTip( "This gun melee will gib enemy if checked" );
+		Asset.AddEntry_Float( "maxGibDistance", 1000.0, 0, 20000 ).SetTitle( "Max Gib Distance" );
+		Asset.AddEntry_Float( "gibChance", 0.3, 0, 1 ).SetTitle( "Gib Chance" ).SetToolTip( "Chance that lethal damage will produce a gib" );
+		Asset.AddEntry_Float( "gibChanceMultiple", 0, 0, 1 ).SetTitle( "Multiple Part Gib Chance" ).SetToolTip( "If we are producing a gib this is the chance that it will produce multiple gibs" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Stack Fire ( unused )
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Reloadable Fuel Tank	( unused )
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Overheating ( unused )
+
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Auto turret scanning ( unused )
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	
+	// Indicators
+	
+	Asset.BeginCategory( "Indicators" );
+	{
+		Asset.AddEntry_Int( "indicatorRadius", 0, 0, 10000 ).SetTitle( "Indicator Radius" ).SetStep( 10 ).SetToolTip( "Indicator radius, distance from the grenade the indicator will show. if zero, default will be used. (Max of cg_hudGrenadeIconMaxRangeFrag or damage radius)" );
+		Asset.AddEntry_CheckBox( "showIndicator", false ).SetTitle( "Show Indicator" ).SetToolTip( "Show grenade indicator icon. If unchecked, default values will be used. (frag grenades always show indicators)" );
+		Asset.AddEntry_CheckBox( "decoy", false).SetTitle( "Is Decoy" ).SetToolTip( "Indicates that weapon is considred a decoy." );
+		Asset.AddEntry_CheckBox( "altoffhand", false).SetTitle( "Is AltOffhand" ).SetToolTip( "Is not considered by BG_PlayerGadget_GetHeldOffhandGadgets." );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Location Damage
+	
+	Asset.BeginCategory( "Location Damage" );
+	{
+		Asset.AddEntry_Float( "locNone", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "None" ).SetToolTip( "Unrelated to weapon. Used for damage that's not location based, such as grenades or falling.  Included here for completeness." );
+		Asset.AddEntry_Float( "locHelmet", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Helmet" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locHead", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Head" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locNeck", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Neck" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locTorsoUpper", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Upper Torso" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locTorsoMid", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Mid Torso" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locTorsoLower", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Lower Torso" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locLeftArmUpper", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Left Upper Arm" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locRightArmUpper", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Right Upper Arm" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locLeftArmLower", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Left Lower Arm" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locRightArmLower", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Right Lower Arm" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locLeftHand", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Left Hand" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locRightHand", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Right Hand" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locLeftLegUpper", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Left Upper Leg" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locRightLegUpper", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Right Upper Leg" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locLeftLegLower", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Left Lower Leg" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locRightLegLower", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Right Lower Leg" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locLeftFoot", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Left Foot" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locRightFoot", 1, 0, 10 ).SetStep( 0.1 ).SetTitle( "Right Foot" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_Float( "locGun", 0, 0, 10 ).SetStep( 0.1 ).SetTitle( "Gun" ).SetToolTip( "Damage per-bullet multiplier." );
+		Asset.AddEntry_CheckBox( "specialPain", false).SetTitle( "Special Pain" ).SetToolTip( "Indicates that damage by this weapon falls into special behavior tree category" );
+	}
+		
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// State Timers
+	
+	Asset.BeginCategory( "State Timers" );
+	{
+		Asset.AddEntry_Float( "fireTime", 0.1, 0, 10 ).SetStep( 0.05 ).SetTitle( "Fire" ).SetToolTip( "Rate of fire in seconds per round. It's good to keep this in multiples of 0.016 for sound. If 0.016 then it's 3750 rounds a minute." );
+		Asset.AddEntry_Float( "lastFireTime", 0, 0, 10 ).SetStep( 0.05 ).SetTitle( "Last Shot" ).SetToolTip( "Rate of fire in seconds per round for the last bullet. If zero, the standard fire rate is applied. It's good to keep this in multiples of 0.016 for sound. If 0.016 then it's 3750 rounds a minute." );
+		Asset.AddEntry_Float( "fireDelay", 0.1, 0, 10 ).SetStep( 0.05 ).SetTitle( "Fire Delay" ).SetToolTip( "Delay in seconds between pressing the fire button and the weapon actually firing." );
+		Asset.AddEntry_Float( "quickTossTime", 0.1, 0, 10 ).SetStep( 0.05 ).SetTitle( "Quick Toss" ).SetToolTip( "Length of the quick toss animation." );
+		Asset.AddEntry_Float( "holdFireTime", 0.1, 0, 10 ).SetStep( 0.05 ).SetTitle( "Hold Fire" ).SetToolTip( "Length of the hold fire (pullback) animation." );
+		Asset.AddEntry_Float( "reloadTime", 2, 0, 10 ).SetStep( 0.05 ).SetTitle( "Reload" ).SetToolTip( "The number of seconds over which the non-empty reload animation will be played.  In segmented reload weapons, this is the animation that loops to give the player ammo." );
+		Asset.AddEntry_Float( "detonateTime", 0.2, 0, 10 ).SetStep( 0.05 ).SetTitle( "Detonate" ).SetToolTip( "Length of the detonate animation." );
+		Asset.AddEntry_Float( "detonateDelay", 0.1, 0, 10 ).SetStep( 0.05 ).SetTitle( "Detonate Delay" ).SetToolTip( "Delay in seconds between pressing the detonate button and the detonation actually happening." );
+		Asset.AddEntry_Float( "slamTime", 0.1, 0, 10 ).SetStep( 0.05 ).SetTitle( "Slam" ).SetToolTip( "How long the slam portion of the attack takes" );
+		Asset.AddEntry_Float( "dropTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Drop" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "raiseTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Raise" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "firstRaiseTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "First Raise" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "altDropTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Alt Drop" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "altRaiseTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Alt Raise" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "adsAltDropTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Ads Alt Drop" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "adsAltRaiseTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Ads Alt Raise" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "quickDropTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Quick Drop" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "quickRaiseTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Quick Raise" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "emptyDropTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Empty Drop" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "emptyRaiseTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Empty Raise" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "sprintInTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Sprint In" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "sprintLoopTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Sprint Loop" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "sprintOutTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Sprint Out" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "lowReadyInTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Low Ready In" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "lowReadyLoopTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Low Ready Loop" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "lowReadyOutTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Low Ready Out" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "crawlInTime", 0.0, 0, 10 ).SetStep( 0.05 ).SetTitle( "Crawl In" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "crawlForwardTime", 0.0, 0, 10 ).SetStep( 0.05 ).SetTitle( "Crawl Forward" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "crawlBackTime", 0.0, 0, 10 ).SetStep( 0.05 ).SetTitle( "Crawl Back" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "crawlRightTime", 0.0, 0, 10 ).SetStep( 0.05 ).SetTitle( "Crawl Right" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "crawlLeftTime", 0.0, 0, 10 ).SetStep( 0.05 ).SetTitle( "Crawl Left" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "crawlOutFireTime", 0.0, 0, 10 ).SetStep( 0.05 ).SetTitle( "Crawl Out Fire" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "crawlOutTime", 0.0, 0, 10 ).SetStep( 0.05 ).SetTitle( "Crawl Out" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "slideInTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Slide In" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "slideLoopTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Slide Loop" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "slideOutTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Slide Out" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "leapInTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Leap In" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "leapLoopTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Leap Loop" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "leapCancelTime", 0.016, 0, 10 ).SetStep( 0.05 ).SetTitle( "Leap Cancel" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "leapOutTime", 0.3, 0, 10 ).SetStep( 0.05 ).SetTitle( "Leap Out" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "diveInTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Dive In" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "diveLoopTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Dive Loop" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "diveOutTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Dive Out" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimFromLandTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Transition From Land Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimIdleLoopTime", 2, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Idle Loop Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimCombatInTime", 0.3, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Combat In Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimCombatOutTime", 0.2, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Combat Out Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimMovingInTime", 0.3, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Moving In Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimMovingForwardTime", 1.15, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Forward Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimMovingBackwardTime", 0.95, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Backward Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimMovingLeftTime", 1.05, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Moving Left Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimMovingRightTime", 1.15, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Moving Right Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimMovingOutTime", 0.3, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Moving Out Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimSprintInTime", 0.25, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Sprint In Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimSprintLoopTime", 1.25, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Sprint Loop Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimSprintSurfaceLoopTime", 1.1, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Sprint Surface Loop Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimSprintOutTime", 0.25, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Sprint Out Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimToLandTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Transition To Land Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "swimDropTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "Swim Drop Time" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "wallRunInTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "WallRun In" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "wallRunLoopTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "WallRun Loop" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "wallRunOutTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "WallRun Out" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "doubleJumpInTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "DoubleJump In" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "doubleJumpLoopTime", 0.5, 0, 10 ).SetStep( 0.05 ).SetTitle( "DoubleJump Loop" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "doubleJumpCancelTime", 0.016, 0, 10 ).SetStep( 0.05 ).SetTitle( "DoubleJump Cancel" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+		Asset.AddEntry_Float( "doubleJumpOutTime", 0.3, 0, 10 ).SetStep( 0.05 ).SetTitle( "DoubleJump Out" ).SetToolTip( "How long this weapon state will last. The viewmodel animations will get scaled to match the times set." );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Sprint Movement Settings
+	
+	Asset.BeginCategory( "Sprint Movement Settings" );
+	{
+		Asset.AddEntry_Float( "sprintOfsF", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Forward" ).SetToolTip( "When the player changes to this stance, the viewmodel will slide forward by this amount. (-ive for backward)" );
+		Asset.AddEntry_Float( "sprintOfsR", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Right" ).SetToolTip( "When the player changes to this stance, the viewmodel will translate horizontally by this amount. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "sprintOfsU", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Up" ).SetToolTip( "When the player changes to this stance, the viewmodel will translate vertically by this amount. (+/- for up/down respectively)" );
+		Asset.AddEntry_Float( "sprintRotP", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Pitch" ).SetToolTip( "Viewmodel will pitch by this amount if the player is moving in this stance. (+/- for down/up respectively)" );
+		Asset.AddEntry_Float( "sprintRotY", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Yaw" ).SetToolTip( "Viewmodel will yaw by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "sprintRotR", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Roll" ).SetToolTip( "Viewmodel will roll by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "sprintScale", 1, 0.01, 10 ).SetStep( 0.01 ).SetTitle( "MoveSpeed Scale" ).SetToolTip( "A multiplier applied to xy movement of the viewmodel during sprint higher is faster" );
+	}
+
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// LowReady Movement Settings
+	
+	Asset.BeginCategory( "LowReady Movement Settings" );
+	{
+		Asset.AddEntry_Float( "lowReadyOfsF", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Forward" ).SetToolTip( "When the player changes to this stance, the viewmodel will slide forward by this amount. (-ive for backward)" );
+		Asset.AddEntry_Float( "lowReadyOfsR", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Right" ).SetToolTip( "When the player changes to this stance, the viewmodel will translate horizontally by this amount. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "lowReadyOfsU", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Up" ).SetToolTip( "When the player changes to this stance, the viewmodel will translate vertically by this amount. (+/- for up/down respectively)" );
+		Asset.AddEntry_Float( "lowReadyRotP", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Pitch" ).SetToolTip( "Viewmodel will pitch by this amount if the player is moving in this stance. (+/- for down/up respectively)" );
+		Asset.AddEntry_Float( "lowReadyRotY", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Yaw" ).SetToolTip( "Viewmodel will yaw by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "lowReadyRotR", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Roll" ).SetToolTip( "Viewmodel will roll by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Riding Vehicle Settings
+	
+	Asset.BeginCategory( "Riding Vehicle Settings" );
+	{
+		Asset.AddEntry_Float( "rideOfsF", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Forward" ).SetToolTip( "When the player rides a vehicle, the viewmodel will slide forward by this amount. (-ive for backward)" );
+		Asset.AddEntry_Float( "rideOfsR", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Right" ).SetToolTip( "When the player rides a vehicle, the viewmodel will translate horizontally by this amount. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "rideOfsU", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Up" ).SetToolTip( "When the player rides a vehicle, the viewmodel will translate vertically by this amount. (+/- for up/down respectively)" );
+		Asset.AddEntry_Float( "rideRotP", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Pitch" ).SetToolTip( "Viewmodel will pitch by this amount if the player is riding a vehicle. (+/- for down/up respectively)" );
+		Asset.AddEntry_Float( "rideRotY", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Yaw" ).SetToolTip( "Viewmodel will yaw by this amount if the player is riding a vehicle. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "rideRotR", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Roll" ).SetToolTip( "Viewmodel will roll by this amount if the player is riding a vehicle. (+/- for left/right respectively)" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Dive to Prone Movement Settings
+	
+	Asset.BeginCategory( "Dive to Prone Movement Settings" );
+	{
+		Asset.AddEntry_Float( "dtpOfsF", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Forward" ).SetToolTip( "When the player changes to this stance, the viewmodel will slide forward by this amount. (-ive for backward)" );
+		Asset.AddEntry_Float( "dtpOfsR", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Right" ).SetToolTip( "When the player changes to this stance, the viewmodel will translate horizontally by this amount. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "dtpOfsU", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Up" ).SetToolTip( "When the player changes to this stance, the viewmodel will translate vertically by this amount. (+/- for up/down respectively)" );
+		Asset.AddEntry_Float( "dtpRotP", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Pitch" ).SetToolTip( "Viewmodel will pitch by this amount if the player is moving in this stance. (+/- for down/up respectively)" );
+		Asset.AddEntry_Float( "dtpRotY", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Yaw" ).SetToolTip( "Viewmodel will yaw by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "dtpRotR", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Roll" ).SetToolTip( "Viewmodel will roll by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "dtpScale", 1, 0.01, 10 ).SetStep( 0.1 ).SetTitle( "MoveSpeed Scale" ).SetToolTip( "A multiplier applied to xy movement of the viewmodel during dive to prone higher is faster" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+
+	// Mantle Movement Settings ( unused )
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+
+	// Player Slide Movement Settings
+	
+	Asset.BeginCategory( "Player Slide Movement Settings" );
+	{
+		Asset.AddEntry_Float( "slideOfsF", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Forward" ).SetToolTip( "When the player changes to this stance, the viewmodel will slide forward by this amount. (-ive for backward)" );
+		Asset.AddEntry_Float( "slideOfsR", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Right" ).SetToolTip( "When the player changes to this stance, the viewmodel will translate horizontally by this amount. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "slideOfsU", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Offset Up" ).SetToolTip( "When the player changes to this stance, the viewmodel will translate vertically by this amount. (+/- for up/down respectively)" );
+		Asset.AddEntry_Float( "slideRotP", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Pitch" ).SetToolTip( "Viewmodel will pitch by this amount if the player is moving in this stance. (+/- for down/up respectively)" );
+		Asset.AddEntry_Float( "slideRotY", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Yaw" ).SetToolTip( "Viewmodel will yaw by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "slideRotR", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Roll" ).SetToolTip( "Viewmodel will roll by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+	}
+
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Strafe Movement Settings
+	
+	Asset.BeginCategory( "Strafe Movement Settings" );	
+	{
+		Asset.AddEntry_Float( "strafeMoveF", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Move Forward" ).SetToolTip( "Viewmodel will translate forward/backward by this amount if the player is strafing. (+/- for forward/backward respectively)" );
+		Asset.AddEntry_Float( "strafeMoveR", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Move Right" ).SetToolTip( "Viewmodel will translate horizontally by this amount if the player is strafing. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "strafeMoveU", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Move Up" ).SetToolTip( "Viewmodel will translate vertically by this amount if the player is strafing. (+/- for up/down respectively)" );
+		Asset.AddEntry_Float( "strafeRotP", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Pitch" ).SetToolTip( "Viewmodel will pitch by this amount if the player is strafing. (+/- for down/up respectively)" );
+		Asset.AddEntry_Float( "strafeRotY", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Yaw" ).SetToolTip( "Viewmodel will yaw by this amount if the player is strafing. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "strafeRotR", 0, -300, 300 ).SetStep( 0.1 ).SetTitle( "Rot Roll" ).SetToolTip( "Viewmodel will roll by this amount if the player is strafing. (+/- for left/right respectively)" );
+	}
+
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Stand Movement Settings
+	
+	Asset.BeginCategory( "Stand Movement Settings" );
+	{
+		Asset.AddEntry_Float( "standMoveF", 0, -100, 100 ).SetStep( 0.1 ).SetTitle( "Move Forward" ).SetToolTip( "Viewmodel will translate forward/backward by this amount if the player is moving in this stance. (+/- for forward/backward respectively)" );
+		Asset.AddEntry_Float( "standMoveR", 1, -100, 100 ).SetStep( 0.1 ).SetTitle( "Move Right" ).SetToolTip( "Viewmodel will translate horizontally by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "standMoveU", -1.5, -100, 100 ).SetStep( 0.1 ).SetTitle( "Move Up" ).SetToolTip( "Viewmodel will translate vertically by this amount if the player is moving in this stance. (+/- for up/down respectively)" );
+		Asset.AddEntry_Float( "standRotP", 0, -100, 100 ).SetStep( 0.1 ).SetTitle( "Rot Pitch" ).SetToolTip( "Viewmodel will pitch by this amount if the player is moving in this stance. (+/- for down/up respectively)" );
+		Asset.AddEntry_Float( "standRotY", 0, -100, 100 ).SetStep( 0.1 ).SetTitle( "Rot Yaw" ).SetToolTip( "Viewmodel will yaw by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "standRotR", 0, -100, 100 ).SetStep( 0.1 ).SetTitle( "Rot Roll" ).SetToolTip( "Viewmodel will roll by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "standMoveMinSpeed", 110, 0, 1000 ).SetStep( 1 ).SetTitle( "Move Min Speed" ).SetToolTip( "Not used." );
+		Asset.AddEntry_Float( "posMoveRate", 4, 0, 100 ).SetStep( 0.1 ).SetTitle( "Pos Move Rate" ).SetToolTip( "Controls speed of viewmodel translation while moving in stand and crouch, transitions between stand and crouch, and crouch into prone." );
+		Asset.AddEntry_Float( "standRotMinSpeed", 110, 0, 1000 ).SetStep( 0.1 ).SetTitle( "Rot Min Speed" ).SetToolTip( "Not used." );
+		Asset.AddEntry_Float( "posRotRate", 5, 0, 100 ).SetStep( 0.1 ).SetTitle( "Pos Rot Rate" ).SetToolTip( "Rotational speed of viewmodel in standing and crouching. If this is set in the prone section, a value should be entered here so that the viewmodel is able to rotate back to normal in crouch and stand." );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Crouch Movement Settings
+
+	Asset.BeginCategory( "Crouch Movement Settings" );	
+	{
+		Asset.AddEntry_Float( "duckedMoveF", 0, -100, 100 ).SetStep( 0.1 ).SetTitle( "Move Forward" ).SetToolTip( "Viewmodel will translate forward/backward by this amount if the player is moving in this stance. (+/- for forward/backward respectively)" );
+		Asset.AddEntry_Float( "duckedMoveR", 1, -100, 100 ).SetStep( 0.1 ).SetTitle( "Move Right" ).SetToolTip( "Viewmodel will translate horizontally by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "duckedMoveU", -1.5, -100, 100 ).SetStep( 0.1 ).SetTitle( "Move Up" ).SetToolTip( "Viewmodel will translate vertically by this amount if the player is moving in this stance. (+/- for up/down respectively)" );
+		Asset.AddEntry_Float( "duckedRotP", 0, -100, 100 ).SetStep( 0.1 ).SetTitle( "Rot Pitch" ).SetToolTip( "Viewmodel will pitch by this amount if the player is moving in this stance. (+/- for down/up respectively)" );
+		Asset.AddEntry_Float( "duckedRotY", 0, -100, 100 ).SetStep( 0.1 ).SetTitle( "Rot Yaw" ).SetToolTip( "Viewmodel will yaw by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "duckedRotR", 0, -100, 100 ).SetStep( 0.1 ).SetTitle( "Rot Roll" ).SetToolTip( "Viewmodel will roll by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "duckedOfsF", -2, -100, 100 ).SetStep( 0.1 ).SetTitle( "Offset Forward" ).SetToolTip( "When the player changes to this stance, the viewmodel will slide forward by this amount. (-ive for backward)" );
+		Asset.AddEntry_Float( "duckedOfsR", 2, -100, 100 ).SetStep( 0.1 ).SetTitle( "Offset Right" ).SetToolTip( "When the player changes to this stance, the viewmodel will translate horizontally by this amount. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "duckedOfsU", -0.2, -100, 100 ).SetStep( 0.1 ).SetTitle( "Offset Up" ).SetToolTip( "When the player changes to this stance, the viewmodel will translate vertically by this amount. (+/- for up/down respectively)" );
+		Asset.AddEntry_Float( "duckedMoveMinSpeed", 60, 0, 1000 ).SetStep( 1 ).SetTitle( "Move Min Speed" ).SetToolTip( "Not used." );
+		Asset.AddEntry_Float( "duckedRotMinSpeed", 60, 0, 1000 ).SetStep( 1 ).SetTitle( "Rot Min Speed" ).SetToolTip( "Not used." );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Prone Movement Settings
+
+	Asset.BeginCategory( "Prone Movement Settings" );
+	{
+		Asset.AddEntry_Float( "proneMoveF", 0, -100, 100 ).SetStep( 0.1 ).SetTitle( "Move Forward" ).SetToolTip( "Viewmodel will translate forward/backward by this amount if the player is moving in this stance. (+/- for forward/backward respectively)" );
+		Asset.AddEntry_Float( "proneMoveR", 1, -100, 100 ).SetStep( 0.1 ).SetTitle( "Move Right" ).SetToolTip( "Viewmodel will translate horizontally by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "proneMoveU", -1.5, -100, 100 ).SetStep( 0.1 ).SetTitle( "Move Up" ).SetToolTip( "Viewmodel will translate vertically by this amount if the player is moving in this stance. (+/- for up/down respectively)" );
+		Asset.AddEntry_Float( "proneRotP", 0, -100, 100 ).SetStep( 0.1 ).SetTitle( "Rot Pitch" ).SetToolTip( "Viewmodel will pitch by this amount if the player is moving in this stance. (+/- for down/up respectively)" );
+		Asset.AddEntry_Float( "proneRotY", 0, -100, 100 ).SetStep( 0.1 ).SetTitle( "Rot Yaw" ).SetToolTip( "Viewmodel will yaw by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "proneRotR", 0, -100, 100 ).SetStep( 0.1 ).SetTitle( "Rot Roll" ).SetToolTip( "Viewmodel will roll by this amount if the player is moving in this stance. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "proneOfsF", -6, -100, 100 ).SetStep( 0.1 ).SetTitle( "Offset Forward" ).SetToolTip( "When the player changes to this stance, the viewmodel will slide forward by this amount. (-ive for backward)" );
+		Asset.AddEntry_Float( "proneOfsR", 3.5, -100, 100 ).SetStep( 0.1 ).SetTitle( "Offset Right" ).SetToolTip( "When the player changes to this stance, the viewmodel will translate horizontally by this amount. (+/- for left/right respectively)" );
+		Asset.AddEntry_Float( "proneOfsU", 0.8, -100, 100 ).SetStep( 0.1 ).SetTitle( "Offset Up" ).SetToolTip( "When the player changes to this stance, the viewmodel will translate vertically by this amount. (+/- for up/down respectively)" );
+		Asset.AddEntry_Float( "proneMoveMinSpeed", 0, 0, 1000 ).SetStep( 0.1 ).SetTitle( "Move Min Speed" ).SetToolTip( "Not used." );
+		Asset.AddEntry_Float( "posProneMoveRate", 10, 0, 100 ).SetStep( 0.1 ).SetTitle( "Pos Move Rate" ).SetToolTip( "Controls the speed of viewmodel translation while moving in this stance and changing to crouched." );
+		Asset.AddEntry_Float( "proneRotMinSpeed", 0, 0, 1000 ).SetStep( 0.1 ).SetTitle( "Rot Min Speed" ).SetToolTip( "Not used." );
+		Asset.AddEntry_Float( "posProneRotRate", 10, 0, 100 ).SetStep( 0.1 ).SetTitle( "Pos Rot Rate" ).SetToolTip( "Controls the speed of viewmodel rotation while moving in this stance." );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Idle Settings // Check this...
+	
+	Asset.BeginCategory( "Idle Settings" );
+	{
+		Asset.AddEntry_Int( "hipIdleAmount", 80, 0, 150 ).SetStep( 0.1 ).SetTitle( "Hip Amount" ).SetToolTip( "Strength of viewmodel wavering motion when in hipfire position." );
+		Asset.AddEntry_Float( "hipIdleSpeed", 0, 0, 100 ).SetStep( 0.1 ).SetTitle( "Hip Speed" ).SetToolTip( "How fast the viewmodel wavers in hipfire position within Hip Amount." );
+		Asset.AddEntry_Float( "idleSpeedFromFireTransitionTime", 0, 0, 10 ).SetStep( 0.05 ).SetTitle( "Idle Speed From Fire Transition Time" ).SetToolTip( "The time it takes to lerp back up to full idle speed after firing, the EF_FIRING flag, is done" );
+		Asset.AddEntry_Float( "idleCrouchFactor", 0.5, 0, 1 ).SetStep( 0.01 ).SetTitle( "Crouch Factor" ).SetToolTip( "Hip/ADS Amount multiplier for reducing viewmodel wavering when in this stance." );
+		Asset.AddEntry_Float( "idleProneFactor", 0.15, 0, 1 ).SetStep( 0.01 ).SetTitle( "Prone Factor" ).SetToolTip( "Hip/ADS Amount multiplier for reducing viewmodel wavering when in this stance." );
+	}
+
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	
+	// ADS Settings ( unused )
+	Asset.BeginCategory( "ADS Settings" );
+	{
+		Asset.AddEntry_Float( "adsTurnRateScalar", 1, 0.01, 10 ).SetTitle( "ADS Turn Rate Scalar" ).SetToolTip( "Scalar to turn rate that is applied when in ADS." );
+
+		Asset.AddEntry_Float( "adsZoom1_focalLength", 20, 15, 300 ).SetTitle( "High Zoom Focal Length" ).SetToolTip( "High Zoom Focal length when in ADS." );
+		Asset.AddEntry_Float( "adsZoom2_focalLength", 20, 15, 300 ).SetTitle( "Med Zoom Focal Length" ).SetToolTip( "Med Zoom Focal length when in ADS." );
+		Asset.AddEntry_Float( "adsZoom3_focalLength", 20, 15, 300 ).SetTitle( "Low Zoom Focal Length" ).SetToolTip( "Low Zoom Focal length when in ADS." );
+
+		Asset.AddEntry_Float( "adsZoom1_fStop", 24, 1.2, 120 ).SetTitle( "High Zoom F-Stop" ).SetToolTip( "High Zoom F-Stop when in ADS." );
+		Asset.AddEntry_Float( "adsZoom2_fStop", 24, 1.2, 120 ).SetTitle( "Med Zoom F-Stop" ).SetToolTip( "Med Zoom F-Stop when in ADS." );
+		Asset.AddEntry_Float( "adsZoom3_fStop", 24, 1.2, 120 ).SetTitle( "Low Zoom F-Stop" ).SetToolTip( "Low Zoom F-Stop when in ADS." );
+
+		Asset.AddEntry_Float( "adsZoomInFrac", 0.5, 0, 1 ).SetStep( 0.05 ).SetTitle( "Zoom In Frac" ).SetHints( "NOWARNINGS" ).SetToolTip( "Fraction of the hipfire-to-ADS transition time over which the FOV zoom-in effect happens." );
+		Asset.AddEntry_Float( "adsZoomOutFrac", 0.1, 0, 1 ).SetStep( 0.05 ).SetTitle( "Zoom Out Frac" ).SetHints( "NOWARNINGS" ).SetToolTip( "Fraction of the ADS-to-hipfire transition time over which the FOV zoom-out effect happens." );
+	}
+
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Hip Spread Settings ( unused )
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Gun Kick Settings ( unused )
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// View Kick Settings ( unused )
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Sway Settings
+	
+	Asset.BeginCategory( "Sway Settings" );
+	{
+		Asset.AddEntry_Float( "swayMaxAngle", 30, 0, 180 ).SetTitle( "Max Angle" ).SetToolTip( "Max angle change that will be applied to the hipfire viewmodel sway." ).SetStep( 0.05 );
+		Asset.AddEntry_Float( "swayLerpSpeed", 6, 1, 50 ).SetTitle( "Lerp Speed" ).SetToolTip( "Speed at which the sway will lerp in hipfire." ).SetStep( 0.05 );
+		Asset.AddEntry_Float( "swayPitchScale", 0.1, -2, 2 ).SetTitle( "Pitch Scale" ).SetToolTip( "Amount of pitch change in the viewmodel to apply to the sway pitch in hipfire." ).SetStep( 0.05 );
+		Asset.AddEntry_Float( "swayYawScale",  0.1, -2, 2 ).SetTitle( "Yaw Scale" ).SetToolTip( "ADS Yaw Scale" ).SetStep( 0.05 );
+		Asset.AddEntry_Float( "swayHorizScale", 0.1, -2, 2 ).SetTitle( "Horiz Scale" ).SetToolTip( "Amount of yaw change in the viewmodel to apply to the sway horizontal offset in hipfire." ).SetStep( 0.05 );
+		Asset.AddEntry_Float( "swayVertScale", 0.1, -2, 2 ).SetTitle( "Vert Scale" ).SetToolTip( "Amount of pitch change in the view model to apply to the sway vertical offset in hipfire." ).SetStep( 0.05 );
+		Asset.AddEntry_Float( "swayShellShockScale", 5, 0, 20 ).SetTitle( "Shell Shock Scale" ).SetToolTip( "This scale gets applied to the weapon sway while you're in shell shock." ).SetStep( 0.05 );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Mountable Weaponry ( unused )
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// AI Settings ( unused )
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Reticle Settings
+
+	Asset.BeginCategory( "Reticle Settings" );	
+	{
+		Asset.AddEntry_Path( "reticleCenter", "" ).SetTitle( "Center Reticle" ).SetToolTip( "Center Reticle." ).SetRelativePath( "pc/main/" );
+		Asset.AddEntry_Int( "reticleCenterSize", 32, 1, 480 ).SetTitle( "Center Size" ).SetToolTip( "Center Size." );	
+		Asset.AddEntry_Path( "reticleSide", "" ).SetTitle( "Side Reticle" ).SetToolTip( "Side Reticle." ).SetRelativePath( "pc/main/" );
+		Asset.AddEntry_Int( "reticleSideSize", 16, 1, 480 ).SetTitle( "Side Size" ).SetToolTip( "Side Size." );
+		Asset.AddEntry_Float( "hipReticleSidePos", 0, 0, 1 ).SetTitle( "Side Position" ).SetToolTip( "Side Position." );
+		Asset.AddEntry_Int( "reticleMinOfs", 0, 0, 480 ).SetTitle( "Min Offset" ).SetToolTip( "Min Offset." );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// XModels
+	
+	Asset.BeginCategory( "XModels" );
+	{
+		Asset.AddEntry_AssetCombo( "gunModel", "xmodel" ).SetTitle( "View Gun 1" );
+		Asset.AddEntry_AssetCombo( "frontendModel", "xmodel" ).SetTitle( "Frontend Gun" );
+		Asset.AddEntry_String( "viewmodelTag", "" ).SetTitle( "View Gun Tag" ).SetToolTip( "Name of the tag you want the viewmodel to be attached at. If blank, the default will be used (tag_weapon1 for left hand DW weapons, tag_knife_attach for melee weapons, tag_weapon otherwise)." );
+		Asset.AddEntry_AssetCombo( "worldModel", "xmodel" ).SetTitle( "World Gun" );
+		Asset.AddEntry_AssetCombo( "worldGlowingModel", "xmodel" ).SetTitle( "WorldGlowingModel" );
+		Asset.AddEntry_AssetCombo( "stowedModel", "xmodel" ).SetTitle( "StowedWorldModel" ).SetToolTip( "This model will be used for weapons stowed on the back. If this field is empty, World Gun 1 will be used" );
+		Asset.AddEntry_String( "worldModelTagRight", "" ).SetTitle( "World Model Tag (First Gun)" ).SetToolTip( "This is the tag the gun will get attached. In a situation where there are two guns this is the first gun" );
+		Asset.AddEntry_String( "worldModelTagLeft", "" ).SetTitle( "World Model Tag (Second Gun)" ).SetToolTip( "This is the tag the second or dual wield gun will get attached." );
+		Asset.AddEntry_AssetCombo( "handModel", "xmodel" ).SetTitle( "Default view Hand" );
+		Asset.AddEntry_CheckBox( "bShowModelInEachHand", false ).SetTitle( "Show Model In Each Hand" ).SetToolTip( "Displays weapon model on both left and right tags.  This should not be used as a substitute for a full dual wield weapon when complete right and left hand firing is needed." );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Camo
+	
+	Asset.BeginCategory( "Camo" );
+	{
+		Asset.AddEntry_AssetCombo( "camo", "weaponcamotable" ).SetTitle( "Weapon Camo Table" ); // HV - Should be weaponcamotable and not weaponcamo directly, title reflects to this as well now
+	}
+
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// XAnims
+	
+	Asset.BeginCategory( "XAnims" );
+	{
+		Asset.AddEntry_AssetCombo( "idleAnim", "xanim" ).SetTitle( "Idle" );
+		Asset.AddEntry_AssetCombo( "emptyIdleAnim", "xanim" ).SetTitle( "Empty Idle" );
+		Asset.AddEntry_AssetCombo( "fireAnim", "xanim" ).SetTitle( "Fire" );
+		Asset.AddEntry_AssetCombo( "fireDelayAnim", "xanim" ).SetTitle( "Fire Delay" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "lastShotAnim", "xanim" ).SetTitle( "Last Shot" );
+		Asset.AddEntry_AssetCombo( "quickTossAnim", "xanim" ).SetTitle( "Quick Toss" );
+		Asset.AddEntry_AssetCombo( "holdFireAnim", "xanim" ).SetTitle( "Hold Fire" );
+		Asset.AddEntry_AssetCombo( "detonateAnim", "xanim" ).SetTitle( "Detonate" );
+		Asset.AddEntry_AssetCombo( "raiseAnim", "xanim" ).SetTitle( "Raise" );
+		Asset.AddEntry_AssetCombo( "dropAnim", "xanim" ).SetTitle( "Drop" );
+		Asset.AddEntry_AssetCombo( "firstRaiseAnim", "xanim" ).SetTitle( "First Raise" );
+		Asset.AddEntry_AssetCombo( "altRaiseAnim", "xanim" ).SetTitle( "Alt Raise" );
+		Asset.AddEntry_AssetCombo( "altDropAnim", "xanim" ).SetTitle( "Alt Drop" );
+		Asset.AddEntry_AssetCombo( "adsUpAnim", "xanim" ).SetTitle( "ADS Up" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "adsDownAnim", "xanim" ).SetTitle( "ADS Down" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "adsAltRaiseAnim", "xanim" ).SetTitle( "Ads Alt Raise" );
+		Asset.AddEntry_AssetCombo( "adsAltDropAnim", "xanim" ).SetTitle( "Ads Alt Drop" );
+		Asset.AddEntry_AssetCombo( "quickRaiseAnim", "xanim" ).SetTitle( "Quick Raise" );
+		Asset.AddEntry_AssetCombo( "quickDropAnim", "xanim" ).SetTitle( "Quick Drop" );
+		Asset.AddEntry_AssetCombo( "emptyRaiseAnim", "xanim" ).SetTitle( "Empty Raise" );
+		Asset.AddEntry_AssetCombo( "emptyDropAnim", "xanim" ).SetTitle( "Empty Drop" );
+		Asset.AddEntry_AssetCombo( "sprintInAnim", "xanim" ).SetTitle( "Sprint In" );
+		Asset.AddEntry_AssetCombo( "sprintLoopAnim", "xanim" ).SetTitle( "Sprint Loop" );
+		Asset.AddEntry_AssetCombo( "sprintOutAnim", "xanim" ).SetTitle( "Sprint Out" );
+		Asset.AddEntry_AssetCombo( "sprintInEmptyAnim", "xanim" ).SetTitle( "Sprint In Empty" ); // HV - Added spaces between words - 797 / 799
+		Asset.AddEntry_AssetCombo( "sprintLoopEmptyAnim", "xanim" ).SetTitle( "Sprint Loop Empty" );
+		Asset.AddEntry_AssetCombo( "sprintOutEmptyAnim", "xanim" ).SetTitle( "Sprint Out Empty" );
+		Asset.AddEntry_AssetCombo( "lowReadyInAnim", "xanim" ).SetTitle( "Low Ready In" );
+		Asset.AddEntry_AssetCombo( "lowReadyLoopAnim", "xanim" ).SetTitle( "Low Ready Loop" );
+		Asset.AddEntry_AssetCombo( "lowReadyOutAnim", "xanim" ).SetTitle( "Low Ready Out" );		
+		Asset.AddEntry_AssetCombo( "crawlInAnim", "xanim" ).SetTitle( "Crawl In" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "crawlForwardAnim", "xanim" ).SetTitle( "Crawl Forward" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "crawlBackAnim", "xanim" ).SetTitle( "Crawl Back" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "crawlRightAnim", "xanim" ).SetTitle( "Crawl Right" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "crawlLeftAnim", "xanim" ).SetTitle( "Crawl Left" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "crawlOutAnim", "xanim" ).SetTitle( "Crawl Out" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "crawlEmptyInAnim", "xanim" ).SetTitle( "Crawl Empty In" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "crawlEmptyForwardAnim", "xanim" ).SetTitle( "Crawl Empty Forward" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "crawlEmptyBackAnim", "xanim" ).SetTitle( "Crawl Empty Back" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "crawlEmptyRightAnim", "xanim" ).SetTitle( "Crawl Empty Right" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "crawlEmptyLeftAnim", "xanim" ).SetTitle( "Crawl Empty Left" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "crawlEmptyOutAnim", "xanim" ).SetTitle( "Crawl Empty Out" ).SetHints( "NOWARNINGS" );	
+		Asset.AddEntry_AssetCombo( "trmInAnim", "xanim" ).SetTitle( "TRM Drop to Reach High" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "trmOutAnim", "xanim" ).SetTitle( "TRM Hand Contact to Mantle High" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "trmInLowAnim", "xanim" ).SetTitle( "TRM Drop to Reach Low" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "trmOutLowAnim", "xanim" ).SetTitle( "TRM Hand Contact to Mantle Low" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "trmOverAnim", "xanim" ).SetTitle( "TRM Over" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "trmOverLeftAnim", "xanim" ).SetTitle( "TRM Over Left" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "trmOverRightAnim", "xanim" ).SetTitle( "TRM Over Right" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "walkAnim", "xanim" ).SetTitle( "Additive Walk" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "jumpAnim", "xanim" ).SetTitle( "Additive Jump" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "jumpLandAnim", "xanim" ).SetTitle( "Additive Jump Land" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "jukeLeftAnim", "xanim" ).SetTitle( "Additive Juke Left" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "jukeRightAnim", "xanim" ).SetTitle( "Additive Juke Right" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "jukeForwardAnim", "xanim" ).SetTitle( "Additive Juke Forward" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "jukeBackwardAnim", "xanim" ).SetTitle( "Additive Juke Backward" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "jukeLeftADSAnim", "xanim" ).SetTitle( "Additive Juke Left ADS" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "jukeRightADSAnim", "xanim" ).SetTitle( "Additive Juke Right ADS" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "jukeForwardADSAnim", "xanim" ).SetTitle( "Additive Juke Forward ADS" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "jukeBackwardADSAnim", "xanim" ).SetTitle( "Additive Juke Backward ADS" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "fallAnim", "xanim" ).SetTitle( "Additive Fall" ).SetHints( "NOWARNINGS" );		
+		Asset.AddEntry_AssetCombo( "slide_in", "xanim" ).SetTitle( "Slide In" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "slide_in_air", "xanim" ).SetTitle( "Slide In Air" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "slide_loop", "xanim" ).SetTitle( "Slide Loop" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "slide_out", "xanim" ).SetTitle( "Slide Out" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "wallRunInAnim", "xanim" ).SetTitle( "Wall Run In" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "wallRunLoopAnim", "xanim" ).SetTitle( "Wall Run Loop" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "wallRunOutAnim", "xanim" ).SetTitle( "Wall Run Out" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "meleeAnim", "xanim" ).SetTitle( "Melee" );
+		Asset.AddEntry_AssetCombo( "meleeAltAnim", "xanim" ).SetTitle( "Melee Alt Anim" );
+		Asset.AddEntry_AssetCombo( "meleeMissAnim", "xanim" ).SetTitle( "Melee Miss" ).SetToolTip( "This is played on a basic melee attack miss." );
+		Asset.AddEntry_AssetCombo( "meleeAnimEmpty", "xanim" ).SetTitle( "Melee Empty" );
+		Asset.AddEntry_AssetCombo( "meleePowerAnim", "xanim" ).SetTitle( "Melee Power" ).SetToolTip( "The anim played for a melee power attack (right trigger)" );
+		Asset.AddEntry_AssetCombo( "meleeChargeAnim", "xanim" ).SetTitle( "Melee Charge" ).SetToolTip( "The anim played for a melee charge" );
+		Asset.AddEntry_AssetCombo( "meleeChargeAltAnim", "xanim" ).SetTitle( "Melee Charge Alt Anim" ).SetToolTip( "The alt anim played for a melee charge" );
+		Asset.AddEntry_AssetCombo( "meleeChargeAnimAbove", "xanim" ).SetTitle( "Melee Charge Above" ).SetToolTip( "The anim played for a melee charge from Above" );
+		Asset.AddEntry_AssetCombo( "meleeChargeAnimHit", "xanim" ).SetTitle( "Melee Charge Hit" ).SetToolTip( "The anim played for a melee charge non-fatal hit (Default or from the front)" );
+		Asset.AddEntry_AssetCombo( "meleeChargeAnimFatal", "xanim" ).SetTitle( "Melee Charge Fatal" ).SetToolTip( "The anim played for a melee charge fatal hit (Default or from the front)" );
+		Asset.AddEntry_AssetCombo( "meleeChargeAnimMiss", "xanim" ).SetTitle( "Melee Charge Miss" ).SetToolTip( "The anim played for a melee charge miss (Default or from the front)" );
+		Asset.AddEntry_AssetCombo( "swimTransitionFromLand", "xanim" ).SetTitle( "Swim Transition From Land" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "swimIdleLoop", "xanim" ).SetTitle( "Swim Idle Loop" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimCombatIdleIn", "xanim" ).SetTitle( "Swim Combat Idle In" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimCombatIdle", "xanim" ).SetTitle( "Swim Combat Idle" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimCombatOut", "xanim" ).SetTitle( "Swim Combat Out" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimCombatFire", "xanim" ).SetTitle( "Swim Combat Fire" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimCombatAdsFire", "xanim" ).SetTitle( "Swim Combat ADS Fire" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimMovingIn", "xanim" ).SetTitle( "Swim Moving In" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimMovingForward", "xanim" ).SetTitle( "Swim Moving Forward" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "swimMovingBackward", "xanim" ).SetTitle( "Swim Moving Backward" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "swimMovingRight", "xanim" ).SetTitle( "Swim Moving Right" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "swimMovingLeft", "xanim" ).SetTitle( "Swim Moving Left" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimMovingOut", "xanim" ).SetTitle( "Swim Moving Out" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimSprintIn", "xanim" ).SetTitle( "Swim Sprint In" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimSprintLoop", "xanim" ).SetTitle( "Swim Sprint Loop" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimSprintSurfaceLoop", "xanim" ).SetTitle( "Swim Sprint Surface Loop" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimSprintOut", "xanim" ).SetTitle( "Swim Sprint Out" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimTransitionToLand", "xanim" ).SetTitle( "Swim Transition To Land" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimRaise", "xanim" ).SetTitle( "Swim Pullout" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "swimQuickRaise", "xanim" ).SetTitle( "Swim Quick Pullout" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimDrop", "xanim" ).SetTitle( "Swim Putaway" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimDiveIn", "xanim" ).SetTitle( "Swim Dive In" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimDiveLoop", "xanim" ).SetTitle( "Swim Dive Loop" ).SetHints( "NOWARNINGS" );
+        Asset.AddEntry_AssetCombo( "swimDiveOut", "xanim" ).SetTitle( "Swim Dive Out" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_AssetCombo( "castAbility", "xanim" ).SetTitle( "Cast Ability" ).SetHints( "NOWARNINGS" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 
+	// Impacts
+	
+	Asset.BeginCategory( "Impacts" );
+	{
+		Asset.AddEntry_AssetCombo( "normalImpactsFxTable", "impactsfxtable" ).SetTitle( "Explosion FX Table" ).SetHints( "Explosion Effects for this weapon" );
+		Asset.AddEntry_AssetCombo( "bounceImpactsFXTable", "impactsfxtable" ).SetTitle( "Bounce-Stick Impacts FX Table" ).SetHints( "Bounce Impact Effects for this weapon" );
+		Asset.AddEntry_AssetCombo( "dudImpactsFXTable", "impactsfxtable" ).SetTitle( "Dud Impacts FX Table" ).SetHints( "Dud Impact Effects for this weapon" );
+		Asset.AddEntry_AssetCombo( "normalImpactsSoundsTable", "impactsoundstable" ).SetTitle( "Explosion Sounds Table" ).SetHints( "Explosion Sounds for this weapon" );
+		Asset.AddEntry_AssetCombo( "bounceImpactsSoundsTable", "impactsoundstable" ).SetTitle( "Bounce-Stick Impacts Sounds Table" ).SetHints( "Bounce Impact Sounds for this weapon" );
+		Asset.AddEntry_AssetCombo( "dudImpactsSoundsTable", "impactsoundstable" ).SetTitle( "Dud Impacts Sounds Table" ).SetHints( "Dud Impact Sounds for this weapon" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 
+	// Effects
+	Asset.BeginCategory( "FX" );
+	{
+		Asset.AddEntry_Path( "viewPersistentEffect1", "" ).SetTitle( "Persistent View FX " ).SetRelativePath( "share/raw" ).UpdateOnChange( true );
+		Asset.AddEntry_BoneCombo( "persistentViewModelTag1", "gunModel" ).SetHints( "NOWARNINGS" ).SetTitle( "FX Persistent View Model Tag" );
+		Asset.AddEntry_AssetCombo( "viewPersistentEffectSet", "tagfx").SetTitle( "Persistent View FX Table" ).SetToolTip( "TagFXSet played on the viewmodel." );
+		Asset.AddEntry_Path( "worldPersistentEffect1", "" ).SetTitle( "Persistent World FX " ).SetRelativePath( "share/raw" ).UpdateOnChange( true );
+		Asset.AddEntry_BoneCombo( "persistentWorldModelTag1", "gunModel" ).SetHints( "NOWARNINGS" ).SetTitle( "FX Persistent World Model Tag" );
+		Asset.AddEntry_AssetCombo( "worldPersistentEffectSet", "tagfx").SetTitle( "Persistent World FX Table" ).SetToolTip( "TagFXSet played on the world model." );
+		Asset.AddEntry_AssetCombo( "enemyDeathFxSet", "tagfx").SetTitle( "Enemy Death FX Table" ).SetToolTip( "TagFXSet the enemy when killed." );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 
+	// Sounds
+	
+	Asset.BeginCategory( "Sounds", 0, 0.5, 0, "Icon_Sound.png" );
+	{
+		Asset.AddEntry_AssetCombo( "sharedWeaponSounds", "sharedweaponsounds" ).SetTitle( "sharedWeaponSounds" ).SetToolTip( "Use this to specify the sharedWeaponSounds asset for this weapon." );
+		Asset.AddEntry_String( "ammoPickupSound", "" ).SetTitle( "Ammo Pickup" );
+		Asset.AddEntry_String( "ammoPickupSoundPlayer", "" ).SetTitle( "Ammo Pickup (Player)" );
+		Asset.AddEntry_String( "projectileSound", "" ).SetTitle( "Projectile Loop" ).SetToolTip( "Looping sound played on the projectile until it becomes stationary." );;
+		Asset.AddEntry_String( "projectileFireSound", "" ).SetTitle( "Projectile One-Shot" ).SetToolTip( "One shot sound played on the projectile when its fired." );
+		Asset.AddEntry_String( "pullbackSound", "" ).SetTitle( "Pullback" );
+		Asset.AddEntry_String( "pullbackSoundPlayer", "" ).SetTitle( "Pullback (Player)" ).SetToolTip( "Pullback sound used by player. If not defined, player will play normal 'Pullback' that is used by the AI." );
+		Asset.AddEntry_String( "fireSound", "" ).SetTitle( "Fire" );
+		Asset.AddEntry_String( "fireSoundPlayer", "" ).SetTitle( "Fire (Player)" ).SetToolTip( "Fire sound used by player. If not defined, player will play normal 'Fire' that is used by the AI." );
+		Asset.AddEntry_String( "lastShotSound", "" ).SetTitle( "Last Shot (Player)" );
+		Asset.AddEntry_String( "lastShotSoundPlayer", "" ).SetTitle( "Last Shot (Player)" ).SetToolTip( "Last Shot sound used by player. If not defined, player will play normal 'Last Shot' that is used by the AI." );
+		Asset.AddEntry_String( "reloadSound", "" ).SetTitle( "Reload" );
+		Asset.AddEntry_String( "reloadSoundPlayer", "" ).SetTitle( "Reload (Player)" ).SetToolTip( "Reload sound used by player. If not defined, player will play normal 'Reload' that is used by the AI." );
+		Asset.AddEntry_String( "altSwitchSound", "" ).SetTitle( "Alt Switch" );
+		Asset.AddEntry_String( "altSwitchSoundPlayer", "" ).SetTitle( "Alt Switch (Player)" );
+		Asset.AddEntry_String( "raiseSound", "" ).SetTitle( "Raise" );
+		Asset.AddEntry_String( "raiseSoundPlayer", "" ).SetTitle( "Raise (Player)" );
+		Asset.AddEntry_String( "firstRaiseSound", "" ).SetTitle( "First Raise" );
+		Asset.AddEntry_String( "firstRaiseSoundPlayer", "" ).SetTitle( "First Raise (Player)" );
+		Asset.AddEntry_String( "putawaySound", "" ).SetTitle( "Put Away" );
+		Asset.AddEntry_String( "putawaySoundPlayer", "" ).SetTitle( "Put Away (Player)" );
+		Asset.AddEntry_String( "detonateSound", "" ).SetTitle( "Detonate" );
+		Asset.AddEntry_String( "detonateSoundPlayer", "" ).SetTitle( "Detonate (Player)" ).SetToolTip( "Detonate sound used by player. If not defined, player will play normal 'Detonate' that is used by the AI." );
+		Asset.AddEntry_String( "whizbySound", "" ).SetTitle( "Whizby" );
+		Asset.AddEntry_Float( "whizbyRange", 300, 0, 10000 ).SetTitle( "Whizby Sound Range" ).SetToolTip( "The max range that a player will hear a whizby" );
+
+		Asset.AddEntry_Int( "soundRattleRangeMin", 0, 0, 10000 ).SetTitle( "Sound Rattle Range Min" ).SetToolTip( "The min range this weapon will cause sound rattles at." );
+		Asset.AddEntry_Int( "soundRattleRangeMax", 0, 0, 10000 ).SetTitle( "Sound Rattle Range Max" ).SetToolTip( "The max range this weapon will cause sound rattles at." );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Rumbles
+	
+	Asset.BeginCategory( "Rumbles" );
+	{
+		Asset.AddEntry_AssetCombo( "explosionRumble", "rumble" ).SetTitle( "Explosion Rumble" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 
+	// Weapon Rest
+	
+	Asset.BeginCategory( "Weapon Rest" );
+	{
+		Asset.AddEntry_CheckBox( "disableWeaponRest", false ).SetTitle( "Disable Weapon Rest" ).SetToolTip( "Disable the rest state for this weapon." );	
+		Asset.AddEntry_Vector3( "weaponRestPitch", "weaponRestYaw", "weaponRestRoll", 10.0, 30.0, -20.0, -90, 90 ).SetTitle( "WeaponRest angles while centered" ).SetStep( 0.1f ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_Vector3( "weaponRestLookingUpPitch", "weaponRestLookingUpYaw", "weaponRestLookingUpRoll", -5.0, 25.0, 10.0, -90, 90 ).SetTitle( "WeaponRest angles while looking up" ).SetStep( 1.0f ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_Vector3( "weaponRestLookingDownPitch", "weaponRestLookingDownYaw", "weaponRestLookingDownRoll", 10.0, 20.0, 0.0, -90, 90 ).SetTitle( "WeaponRest angles while looking down" ).SetStep( 1.0f ).SetHints( "NOWARNINGS" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	
+	// User Interface
+ 
+	Asset.BeginCategory( "User Interface" );
+	{
+		Asset.AddEntry_AssetCombo( "hudIcon", "image" ).SetTitle( "Hud Icon" ).SetRelativePath( "pc/main/" );
+		Asset.AddEntry_Combo( "hudIconRatio", "4:1 | 1:1 | 2:1" ).SetTitle( " Aspect:" );
+		Asset.AddEntry_AssetCombo( "killIcon", "image" ).SetTitle( "Kill Icon" ).SetRelativePath( "pc/main/" );
+		Asset.AddEntry_AssetCombo( "impactKillIcon", "image" ).SetTitle( "Impact Kill Icon" ).SetRelativePath( "pc/main/" );
+		Asset.AddEntry_Combo( "killIconRatio", "4:1 | 1:1 | 2:1" ).SetTitle( " Aspect:" );
+		Asset.AddEntry_CheckBox( "flipKillIcon", true ).SetTitle( " Flip:" ).SetToolTip( "Used for weapons that need to have their kill icon horizontally flipped before displaying. (For MP obituaries)." );
+		Asset.AddEntry_AssetCombo( "dpadIcon", "image" ).SetTitle( "DPad Icon" ).SetRelativePath( "pc/main/" );
+		Asset.AddEntry_Combo( "dpadIconRatio", "4:1 | 1:1 | 2:1" ).SetTitle( " Aspect:" );
+		Asset.AddEntry_AssetCombo( "ammoCounterIcon", "image" ).SetTitle( "Ammo Counter Icon" ).SetRelativePath( "pc/main/" );
+		Asset.AddEntry_Combo( "ammoCounterIconRatio", "4:1 | 1:1" ).SetTitle( " Aspect:" );
+		Asset.AddEntry_Combo( "ammoCounterClip", "None | Magazine | ShortMagazine | Shotgun | Rocket | Beltfed | AltWeapon" ).SetTitle( "Ammo Counter Clip Style" );
+		Asset.AddEntry_Path( "indicatorIcon", "image" ).SetTitle( "Indicator Icon" ).SetRelativePath( "pc/main/" );
+		Asset.AddEntry_Combo( "indicatorIconRatio", "4:1 | 1:1 | 2:1" ).SetTitle( " Aspect:" );
+		Asset.AddEntry_AssetCombo( "weaponHeadObjective", "objective" ).SetTitle( "Head Objective" ).SetToolTip( "Used for the ingame icon displayed nearby friendly equipment/grenades." );
+		Asset.AddEntry_Float( "weaponHeadObjectiveHeight", 20, 0, 200 ).SetTitle( "Head Objective Height" ).SetStep( 1.0 );
+		Asset.AddEntry_AssetCombo( "crateObjective", "objective" ).SetTitle( "Crate Objective" ).SetToolTip( "Used for the ingame icon displayed above a crate." );
+
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+		
+	// Parallel Bounce Factors
+		
+	Asset.BeginCategory( "Parallel Bounce Factors" );
+	{
+		Asset.AddEntry_Float( "parallelDefaultBounce", 0.5, 0, 1 ).SetTitle( "default" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelAsphaltBounce", 0.5, 0, 1 ).SetTitle( "asphalt" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelBarkBounce", 0.5, 0, 1 ).SetTitle( "bark" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelBrickBounce", 0.5, 0, 1 ).SetTitle( "brick" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelCarpetBounce", 0.5, 0, 1 ).SetTitle( "carpet" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelCeramicBounce", 0.5, 0, 1 ).SetTitle( "ceramic" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelClothBounce", 0.5, 0, 1 ).SetTitle( "cloth" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelConcreteBounce", 0.5, 0, 1 ).SetTitle( "concrete" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelCushionBounce", 0.5, 0, 1 ).SetTitle( "cushion" ).SetStep( 0.01 );;
+		Asset.AddEntry_Float( "parallelDirtBounce", 0.5, 0, 1 ).SetTitle( "dirt" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelFleshBounce", 0.5, 0, 1 ).SetTitle( "flesh" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelFoliageBounce", 0.5, 0, 1 ).SetTitle( "foliage" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelFruitBounce", 0.5, 0, 1 ).SetTitle( "fruit" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelGlassBounce", 0.5, 0, 1 ).SetTitle( "glass" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelGrassBounce", 0.5, 0, 1 ).SetTitle( "grass" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelGravelBounce", 0.5, 0, 1 ).SetTitle( "gravel" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelIceBounce", 0.5, 0, 1 ).SetTitle( "ice" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelMetalBounce", 0.5, 0, 1 ).SetTitle( "metal" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelMudBounce", 0.5, 0, 1 ).SetTitle( "mud" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelPaintedMetalBounce", 0.5, 0, 1 ).SetTitle( "painted metal" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelPaperBounce", 0.5, 0, 1 ).SetTitle( "paper" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelPlasterBounce", 0.5, 0, 1 ).SetTitle( "plaster" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelPlasticBounce", 0.5, 0, 1 ).SetTitle( "plastic" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelRockBounce", 0.5, 0, 1 ).SetTitle( "rock" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelRubberBounce", 0.5, 0, 1 ).SetTitle( "rubber" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelSandBounce", 0.5, 0, 1 ).SetTitle( "sand" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelSnowBounce", 0.5, 0, 1 ).SetTitle( "snow" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelWaterBounce", 0.5, 0, 1 ).SetTitle( "water" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelWoodBounce", 0.5, 0, 1 ).SetTitle( "wood" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelRiotShieldBounce", 0.5, 0, 1 ).SetTitle( "riotshield" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelMetalThinBounce", 0.5, 0, 1 ).SetTitle( "MetalThin" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelMetalHollowBounce", 0.5, 0, 1 ).SetTitle( "MetalHollow" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelMetalCatwalkBounce", 0.5, 0, 1 ).SetTitle( "MetalCatwalk" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelMetalCarBounce", 0.5, 0, 1 ).SetTitle( "MetalCar" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelGlassCarBounce", 0.5, 0, 1 ).SetTitle( "GlassCar" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelGlassBulletproofBounce", 0.5, 0, 1 ).SetTitle( "GlassBulletproof" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelWaterShallowBounce", 0.5, 0, 1 ).SetTitle( "WaterShallow" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "parallelBodyArmorBounce", 0.5, 0, 1 ).SetTitle( "BodyArmor" ).SetStep( 0.01 );		
+	}
+		
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+		
+	// Perpendicular Bounce Factors
+		
+	Asset.BeginCategory( "Perpendicular Bounce Factors" );
+	{
+		Asset.AddEntry_Float( "perpendicularDefaultBounce", 0.5, 0, 1 ).SetTitle( "default" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularAsphaltBounce", 0.5, 0, 1 ).SetTitle( "asphalt" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularBarkBounce", 0.5, 0, 1 ).SetTitle( "bark" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularBrickBounce", 0.5, 0, 1 ).SetTitle( "brick" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularCarpetBounce", 0.5, 0, 1 ).SetTitle( "carpet" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularCeramicBounce", 0.5, 0, 1 ).SetTitle( "ceramic" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularClothBounce", 0.5, 0, 1 ).SetTitle( "cloth" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularConcreteBounce", 0.5, 0, 1 ).SetTitle( "concrete" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularCushionBounce", 0.5, 0, 1 ).SetTitle( "cushion" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularDirtBounce", 0.5, 0, 1 ).SetTitle( "dirt" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularFleshBounce", 0.5, 0, 1 ).SetTitle( "flesh" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularFoliageBounce", 0.5, 0, 1 ).SetTitle( "foliage" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularFruitBounce", 0.5, 0, 1 ).SetTitle( "fruit" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularGlassBounce", 0.5, 0, 1 ).SetTitle( "glass" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularGrassBounce", 0.5, 0, 1 ).SetTitle( "grass" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularGravelBounce", 0.5, 0, 1 ).SetTitle( "gravel" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularIceBounce", 0.5, 0, 1 ).SetTitle( "ice" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularMetalBounce", 0.5, 0, 1 ).SetTitle( "metal" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularMudBounce", 0.5, 0, 1 ).SetTitle( "mud" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularPaintedMetalBounce", 0.5, 0, 1 ).SetTitle( "painted metal" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularPaperBounce", 0.5, 0, 1 ).SetTitle( "paper" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularPlasterBounce", 0.5, 0, 1 ).SetTitle( "plaster" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularPlasticBounce", 0.5, 0, 1 ).SetTitle( "plastic" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularRockBounce", 0.5, 0, 1 ).SetTitle( "rock" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularRubberBounce", 0.5, 0, 1 ).SetTitle( "rubber" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularSandBounce", 0.5, 0, 1 ).SetTitle( "sand" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularSnowBounce", 0.5, 0, 1 ).SetTitle( "snow" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularWaterBounce", 0.5, 0, 1 ).SetTitle( "water" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularWoodBounce", 0.5, 0, 1 ).SetTitle( "wood" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularRiotShieldBounce", 0.5, 0, 1 ).SetTitle( "riotshield" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularMetalThinBounce", 0.5, 0, 1 ).SetTitle( "MetalThin" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularMetalHollowBounce", 0.5, 0, 1 ).SetTitle( "MetalHollow" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularMetalCatwalkBounce", 0.5, 0, 1 ).SetTitle( "MetalCatwalk" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularMetalCarBounce", 0.5, 0, 1 ).SetTitle( "MetalCar" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularGlassCarBounce", 0.5, 0, 1 ).SetTitle( "GlassCar" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularGlassBulletproofBounce", 0.5, 0, 1 ).SetTitle( "GlassBulletproof" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularWaterShallowBounce", 0.5, 0, 1 ).SetTitle( "WaterShallow" ).SetStep( 0.01 );
+		Asset.AddEntry_Float( "perpendicularBodyArmorBounce", 0.5, 0, 1 ).SetTitle( "BodyArmor" ).SetStep( 0.01 );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 
+	// Depth of Field Settings
+	
+	Asset.BeginCategory( "Depth of Field Settings" );   
+	{
+		Asset.AddEntry_Float( "adsDofStart", 0, 0, 100 ).SetTitle( "ADS Start" ).SetStep( 0.1 );
+		Asset.AddEntry_Float( "adsDofEnd", 0, 0, 100 ).SetTitle( "ADS End" ).SetStep( 0.1 );
+	}
+
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	
+	// Grenade Preparation Effects
+	
+	Asset.BeginCategory( "Grenade Preparation FX" );   
+	{
+		Asset.AddEntry_Path( "tagFx_preparationEffect", "" ).SetRelativePath( "share/raw/" ).SetTitle( "FX tag_fx" ).SetToolTip( "This effect is attached to tag_fx, and plays at the start of the Hold-Fire animation" );
+		Asset.AddEntry_Path( "tagFlash_preparationEffect", "" ).SetTitle( "FX tag_flash" ).SetToolTip( "This effect is attached to tag_flash, and plays at the start of the Hold-Fire animation" ).SetRelativePath( "share/raw/" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 
+	// Underwater
+	
+	Asset.BeginCategory( "Underwater Properties" );   
+	{
+		int fxFieldCount = 3;
+		for ( int i = 0; i < fxFieldCount; i++ )
+		{
+			Asset.AddEntry_Path( "underwaterExplosionSurfaceFX" + i, "" ).SetTitle( "Underwater Explosion Surface FX " + i ).SetRelativePath( "share/raw" );
+
+			// skip the last depth
+			if ( i != (fxFieldCount - 1) )
+			{
+				Asset.AddEntry_Int( "underwaterExplosionSurfaceFXDepth" + i, 1, 1, 10000 ).SetStep( 10 ).SetTitle( "Underwater Explosion Surface FX Depth " + i );
+			}
+		}
+
+		Asset.AddEntry_Float( "waterSwellRadius", 50, 1, 500 ).SetTitle( "Underwater Swell Radius" ).SetStep( 1 ).SetToolTip( "The radius of the water swell surface effect when this explodes underwater" );
+		Asset.AddEntry_Float( "waterSwellForceScale", 1, -50, 50 ).SetTitle( "Underwater Swell Force Scale" ).SetStep( 0.1 ).SetToolTip( "Scales the height of the water swell surface effect when this explodes underwater" );
+		Asset.AddEntry_Float( "waterSwellMaxDepth", 200, 0, 1000 ).SetTitle( "Max Depth for Underwater Swell" ).SetStep( 0.1 ).SetToolTip( "Maximum depth at which a explosion will cause a surface effect" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 
+	// Left-Hand Grip Adjustment
+	
+	Asset.BeginCategory( "Left-Hand Grip Adjustment" );
+	{
+		Asset.AddEntry_Float( "ikLeftHandIdlePosF", 0, -180, 180 ).SetTitle( "Idle Fwd" ).SetHints( "NOWARNINGS" ).SetStep( 0.1 );
+		Asset.AddEntry_Float( "ikLeftHandIdlePosR", 0, -180, 180 ).SetTitle( "Idle Right" ).SetHints( "NOWARNINGS" ).SetStep( 0.1 );
+		Asset.AddEntry_Float( "ikLeftHandIdlePosU", 0, -180, 180 ).SetTitle( "Idle Up" ).SetHints( "NOWARNINGS" ).SetStep( 0.1 );
+		Asset.AddEntry_Float( "ikLeftHandOffsetF", 0, -180, 180 ).SetTitle( "Offset Fwd" ).SetHints( "NOWARNINGS" ).SetStep( 0.1 );
+		Asset.AddEntry_Float( "ikLeftHandOffsetR", 0, -180, 180 ).SetTitle( "Offset Right" ).SetHints( "NOWARNINGS" ).SetStep( 0.1 );
+		Asset.AddEntry_Float( "ikLeftHandOffsetU", 0, -180, 180 ).SetTitle( "Offset Up" ).SetHints( "NOWARNINGS" ).SetStep( 0.1 );
+		Asset.AddEntry_Float( "ikLeftHandRotationP", 0, -180, 180 ).SetTitle( "Offset Pitch" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_Float( "ikLeftHandRotationY", 0, -180, 180 ).SetTitle( "Offset Yaw" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_Float( "ikLeftHandRotationR", 0, -180, 180 ).SetTitle( "Offset Roll" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_Float( "ikLeftHandProneOffsetF", 0, -180, 180 ).SetTitle( "Prone Offset Fwd" ).SetHints( "NOWARNINGS" ).SetStep( 0.1 );
+		Asset.AddEntry_Float( "ikLeftHandProneOffsetR", 0, -180, 180 ).SetTitle( "Prone Offset Right" ).SetHints( "NOWARNINGS" ).SetStep( 0.1 );
+		Asset.AddEntry_Float( "ikLeftHandProneOffsetU", 0, -180, 180 ).SetTitle( "Prone Offset Up" ).SetHints( "NOWARNINGS" ).SetStep( 0.1 );
+		Asset.AddEntry_Float( "ikLeftHandProneRotationP", 0, -180, 180 ).SetTitle( "Prone Offset Pitch" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_Float( "ikLeftHandProneRotationY", 0, -180, 180 ).SetTitle( "Prone Offset Yaw" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_Float( "ikLeftHandProneRotationR", 0, -180, 180 ).SetTitle( "Prone Offset Roll" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_Float( "ikLeftHandUiViewerOffsetF", 0, -180, 180 ).SetTitle( "Viewer Offset Fwd" ).SetHints( "NOWARNINGS" ).SetStep( 0.1 );
+		Asset.AddEntry_Float( "ikLeftHandUiViewerOffsetR", 0, -180, 180 ).SetTitle( "Viewer Offset Right" ).SetHints( "NOWARNINGS" ).SetStep( 0.1 );
+		Asset.AddEntry_Float( "ikLeftHandUiViewerOffsetU", 0, -180, 180 ).SetTitle( "Viewer Offset Up" ).SetHints( "NOWARNINGS" ).SetStep( 0.1 );
+		Asset.AddEntry_Float( "ikLeftHandUiViewerRotationP", 0, -180, 180 ).SetTitle( "Viewer Offset Pitch" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_Float( "ikLeftHandUiViewerRotationY", 0, -180, 180 ).SetTitle( "Viewer Offset Yaw" ).SetHints( "NOWARNINGS" );
+		Asset.AddEntry_Float( "ikLeftHandUiViewerRotationR", 0, -180, 180 ).SetTitle( "Viewer Offset Roll" ).SetHints( "NOWARNINGS" );
+	}
+
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ 	
+	// Lock On Options
+	
+	Asset.BeginCategory( "Lock On Options" );
+	{	
+		Asset.AddEntry_CheckBox( "requireLockonToFire", false ).SetTitle( "Require Lock On" ).SetToolTip( "Player cannot fire the weapon until script has granted them a lock-on." );
+		Asset.AddEntry_Int( "lockOnSpeed", 0, 0, 10000 ).SetTitle( "Lock On Speed" ).SetToolTip( "Lock on speed in miliseconds." );
+		Asset.AddEntry_Int( "lockOnMinRange", 0, 10, 10000 ).SetTitle( "Lock On Min Range" ).SetToolTip( "Min range for locking on" );
+		Asset.AddEntry_Int( "lockOnMaxRange", 0, 0, 10000 ).SetTitle( "Lock On Max Range" ).SetToolTip( "Max range for locking on" );
+		Asset.AddEntry_Int( "lockOnMaxRangeNoLineOfSight", 0, 0, 10000 ).SetTitle( "Lock On Max Range No Line of Sight" ).SetToolTip( "Max range for locking on when there is no line of sight" );
+		Asset.AddEntry_Int( "lockOnScreenRadius", 25, 0, 10000 ).SetTitle( "Lock On Screen Radius" ).SetToolTip( "Screen size for soft target lockon" );
+		Asset.AddEntry_Float( "lockOnRadius", 0, 0, 500 ).SetTitle( "Lock On Radius" ).SetToolTip( "Lock on radius in pixels." );			
+		Asset.AddEntry_CheckBox( "noADSLockOnCheck", false ).SetTitle( "No ADS Lock On Check" ).SetToolTip( "Weapons with this set will not be requied to be ADS to show lockon targets" );
+
+		//Asset.AddEntry_Float( "lockOnTimeMultInCover", 1, 1, 10 ).SetTitle( "Lock On Time Multiplier for Cover" ).SetToolTip( "Lock on time multiplier while target is in cover" );
+		Asset.AddEntry_Int( "lockOnLostSightPivotTimeout", 2000, 0, 10000 ).SetTitle( "Lock On Loss Timeout" ).SetToolTip( "If the player loses sight of the Pivot Point for this long, the Lock-On is lost" );
+		Asset.AddEntry_Int( "lockOnRequiredMsgSuppressAfterFireTime", 0, 0, 10000 ).SetTitle( "Lock On Required Message Suppress After Fire Time" ).SetToolTip( "The window of time in which the lock on required message will not appear after the player fires the weapon (in milliseconds)" );
+
+		Asset.AddEntry_Float( "pivotTargetAttractMin", 0, 0, 1 ).SetTitle( "Pivot Target Attracion Min" ).SetToolTip( "Minimum attraction of pivot point to target" );
+		Asset.AddEntry_Float( "pivotTargetAttractMax", 0.65, 0, 1 ).SetTitle( "Pivot Target Attracion Max" ).SetToolTip( "Maximum attraction of pivot point to target" );
+		Asset.AddEntry_Float( "pivotTargetAttractMinAng", 0, 0, 180 ).SetTitle( "Pivot Target Attracion Min Angle" ).SetToolTip( "Screen angle at which minimum attraction of pivot point to target is applied" );
+		Asset.AddEntry_Float( "pivotTargetAttractMaxAng", 15, 0, 180 ).SetTitle( "Pivot Target Attracion Max Angle" ).SetToolTip( "Screen angle at which maximum attraction of pivot point to target is applied" );
+
+		Asset.AddEntry_Float( "targetTetherHorzAng", 15, 0, 180 ).SetTitle( "Lock On Screen Angle Horizontal" ).SetToolTip( "Screen angle at which target lock is invalid but recoverable" );
+		Asset.AddEntry_Float( "targetTetherVertAng", 9, 0, 180 ).SetTitle( "Lock On Screen Angle Vertical" ).SetToolTip( "Screen angle at which target lock is invalid but recoverable" );
+		Asset.AddEntry_Float( "targetLostHorzAng", 20, 0, 180 ).SetTitle( "Lock On Cancel Screen Angle Horizontal" ).SetToolTip( "Screen angle at which target lock is immediately lost" );
+		Asset.AddEntry_Float( "targetLostVertAng", 15, 0, 180 ).SetTitle( "Lock On Cancel Screen Angle Vertical" ).SetToolTip( "Screen angle at which target lock is immediately lost" );
+
+		Asset.AddEntry_Float( "pivotCurveStartDist", 60.0, 0.0, 10000.0 ).SetTitle( "Curve Start Distance" ).SetToolTip( "Distance the bullet travels before it starts to curve." );
+		Asset.AddEntry_Int( "lockOnReticleFadeTime", 750, 0, 10000 ).SetTitle( "Lock On Reticle Fade Time" ).SetToolTip( "Time it takes the reticle to fade when locking on" );
+		Asset.AddEntry_Float( "lockOnReticleMinAlpha", 0.15, 0.0, 1.0 ).SetTitle( "Lock On Reticle Fade Min Alpha" ).SetToolTip( "Lowest reticle fade level when locking on." );
+
+		Asset.AddEntry_Path( "reticleLockOn", "" ).SetTitle( "Lock On Reticle" ).SetToolTip( "Lock On Reticle." ).SetRelativePath( "pc/main/" );
+		Asset.AddEntry_Path( "reticlePivotLocked", "" ).SetTitle( "Locked Pivot Marker" ).SetToolTip( "Locked Pivot Marker." ).SetRelativePath( "pc/main/" );
+		Asset.AddEntry_Path( "reticlePivotInvalid", "" ).SetTitle( "Invalid Pivot Marker" ).SetToolTip( "Invalid Pivot Marker." ).SetRelativePath( "pc/main/" );
+		Asset.AddEntry_Path( "reticlePivotTarget", "" ).SetTitle( "Tartget Center Marker" ).SetToolTip( "Target Center Marker." ).SetRelativePath( "pc/main/" );
+		Asset.AddEntry_Path( "reticlePivotSides", "" ).SetTitle( "Target Side Marker" ).SetToolTip( "Target Side Marker." ).SetRelativePath( "pc/main/" );
+		Asset.AddEntry_Path( "reticlePivotLine", "" ).SetTitle( "Pivot Line" ).SetToolTip( "Pivot Line." ).SetRelativePath( "pc/main/" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+
+	// Grapple Options
+	
+	Asset.BeginCategory( "Grapple Options" );
+	{
+		Asset.AddEntry_CheckBox( "grappleWeapon", false ).SetTitle( "Grapple Weapon" ).SetHints( "Grappling hook weapon" ).SetToolTip( "This weapon shoots a grappling hook to pull the player to remote locations." );
+
+		Asset.AddEntry_Float( "grappleReelOutSpeed", 1000, 0, 10000 ).SetTitle( "grappleReelOutSpeed" ).SetToolTip( "Still in development" );
+		Asset.AddEntry_Float( "grappleReelInSpeed", 1000, 0, 10000 ).SetTitle( "grappleReelInSpeed" ).SetToolTip( "Still in development" );
+		Asset.AddEntry_Float( "grappleReelInAccelTime", 0.25, 0, 3 ).SetTitle( "grappleReelInAccelTime" ).SetToolTip( "Still in development" );
+		Asset.AddEntry_Float( "grappleReelInDecelTime", 0.25, 0, 3 ).SetTitle( "grappleReelInDecelTime" ).SetToolTip( "Still in development" );
+		Asset.AddEntry_Float( "grappleMagnetTetherHorzAng", 90, 0, 180 ).SetTitle( "grappleMagnetTetherHorzAng" ).SetToolTip( "Still in development" );
+		Asset.AddEntry_Float( "grappleMagnetTetherVertAng", 90, 0, 180 ).SetTitle( "grappleMagnetTetherVertAng" ).SetToolTip( "Still in development" );
+
+		Asset.AddEntry_Path( "reticleGrapple", "" ).SetTitle( "reticleGrapple" ).SetToolTip( "Still in development" ).SetRelativePath( "pc/main/" );
+		//Asset.AddEntry_AssetCombo( "projectileModel", "xmodel" ).SetTitle( "Grapple Model" ).SetToolTip( "Define the model to be used for the grapple projectile" );
+	}
+	
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+
+	// Total Coverage
+	
+	Asset.BeginCategory( "Total Coverage" );
+	{
+		Asset.AddEntry_Float( "totalCoverageDuration", 0, 0, 20 ).SetTitle( "Total Coverage Duration (secs)" ).SetToolTip( "Still in development" );
+		Asset.AddEntry_Int( "totalCoverageMaxRadius", 0, 0, 1000 ).SetTitle( "Total Coverage Max Radius (units)" ).SetToolTip( "Still in development" );
+		Asset.AddEntry_Float( "totalCoverageFadeInTime", 0, 0, 10 ).SetTitle( "Total Coverage Fade In Time (secs)" ).SetToolTip( "Still in development" );
+		Asset.AddEntry_Float( "totalCoverageFadeOutTime", 0, 0, 10 ).SetTitle( "Total Coverage Fade Out Time (secs)" ).SetToolTip( "Still in development" );		
+	}
+
+	// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+
+	// Gadget Settings
+	AddGadgetFields( Asset );
+}
