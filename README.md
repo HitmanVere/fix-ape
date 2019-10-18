@@ -1,7 +1,8 @@
 # APE Mode - Call of Duty: Black Ops 3 - Mod Tools Fixes
 A project to fix and enhance mod tools for Black Ops 3
 
-Every change has comment "// HV" attached. Current changes in following folders:
+Every change has comment "// HV" attached. Want to contribute? Either push or send me DM in Discord: HitmanVere#7069, DM preferred.
+Add comments for easier time checking what is changed. Current changes in following folders:
 
 deffiles:
 - Weapon Camo slots correctly fill in using weaponcamotables like they should
